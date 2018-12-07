@@ -2,12 +2,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <html lang="en">
+<style>
+    .hide{
+        display : none;
+    }
+    .show{
+        display : inline;
+    }
+</style>
+
+
 <head>
     <meta charset="UTF-8">
     <title>index</title>
 </head>
 <body>
-<a href = "/login"> личный кабинет</a>
+<a th:href = "@{/login}"> личный кабинет</a>
+
+<a th:href = "@{/register}"> Регистрация</a>
+
 
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 <form th:action="@{/logout}" method="post">

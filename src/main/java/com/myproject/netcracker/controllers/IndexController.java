@@ -16,4 +16,10 @@ public class IndexController {
     public String loginController(Model model) {
         return "login";
     }
+
+    @RequestMapping("/register")
+    public String registerController(Model model) {
+        return "registration";
+    }
+
 }
