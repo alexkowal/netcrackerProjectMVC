@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .usersByUsernameQuery("select login as login,password as password, 'true' as enabled from ad_users where login = ?")
-                .authoritiesByUsernameQuery("select u.login,r.role from ad_users u inner join ad_role r on u.id_role = r.id_role where u.login = ?");
+                .authoritiesByUsernameQuery("select u.login,r.descr from ad_users u inner join ad_role r on u.id_role = r.id_role where u.login = ?");
 }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .logout()
+                    .logoutSuccessUrl("/index")
                     .permitAll();
     }
 /*

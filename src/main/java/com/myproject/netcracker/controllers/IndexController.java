@@ -49,7 +49,6 @@ public class IndexController {
         return "register";
         }
         user.setId_role(1l);
-        //user.setRoles(Collections.singleton(Role.USER));
         userRepo.save(user);
         return "redirect:/login";
     }
