@@ -14,15 +14,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>LK</title>
 </head>
 <body>
-<a th:href="@{/lk}"> личный кабинет</a>
-<a th:href="@{/register}"> Регистрация</a>
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+
 <form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
-</form>
+
+<p th:text="${login}"></p>
+<p th:text="${username}"></p>
+<p th:text="${email}"></p>
+</label></div>
+
+
 </body>
 </html>
