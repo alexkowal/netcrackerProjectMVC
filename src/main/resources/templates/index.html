@@ -15,14 +15,29 @@
 <head>
     <meta charset="UTF-8">
     <title>index</title>
+
+
 </head>
+<header>
+    <a th:href="@{/lk}"> личный кабинет</a>
+    <a th:href="@{/register}"> Регистрация</a>
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</header>
 <body>
-<a th:href="@{/lk}"> личный кабинет</a>
-<a th:href="@{/register}"> Регистрация</a>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+
+<tr th:each="advert : ${adverts}">
+    <td>
+        <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
+        <div  th:text="${advert.getTitle()}"/>
+        <div  th:text="${advert.getMileage()}"/>
+        <div  th:text="${advert.getDescription()}"/>
+        <div  th:text="${advert.getAddDate()}"/>
+    </td>
+</tr>
+
 </form>
 </body>
 </html>

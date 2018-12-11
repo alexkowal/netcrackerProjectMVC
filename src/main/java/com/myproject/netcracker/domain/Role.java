@@ -9,11 +9,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_role;
 
-    public Long getId_role() {
+    public Long getIdRole() {
         return id_role;
     }
 
-    public void setId_role(Long id_role) {
+    public void setIdRole(Long id_role) {
         this.id_role = id_role;
     }
 

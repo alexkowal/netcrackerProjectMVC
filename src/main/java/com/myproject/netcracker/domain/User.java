@@ -8,10 +8,10 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_user;
+    private Long idUser;
     private String login;
     private String password;
-    private String user_name;
+    private String userName;
     private String email;
     private Long id_role;
 
@@ -20,12 +20,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public Long getId_user() {
-        return id_user;
+    public Long getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(Long id_user) {
-        this.id_user = id_user;
+    public void setIdUser(Long id_user) {
+        this.idUser = id_user;
     }
 
     public String getLogin() {
@@ -44,12 +44,12 @@ public class User {
         this.password = password;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -60,11 +60,11 @@ public class User {
         this.email = email;
     }
 
-    public Long getId_role() {
+    public Long getIdRole() {
         return id_role;
     }
 
-    public void setId_role(Long id_role) {
+    public void setIdRole(Long id_role) {
         this.id_role = id_role;
     }
 
