@@ -1,8 +1,10 @@
 package com.myproject.netcracker.controllers;
 
 import com.myproject.netcracker.domain.Advert;
+import com.myproject.netcracker.domain.Brand;
 import com.myproject.netcracker.domain.User;
 import com.myproject.netcracker.repos.AdvertRepo;
+import com.myproject.netcracker.repos.BrandRepo;
 import com.myproject.netcracker.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,14 +24,17 @@ public class IndexController {
     private AdvertRepo advertRepo;
 
     @Autowired
+    private BrandRepo brandRepo;
+
+    @Autowired
     private UserRepo userRepo;
 
 
     @RequestMapping({"/", "/index"})
     public String indexController(Model model, ArrayList<Advert> adverts) {
-
         List<Advert> list = advertRepo.findAllByAddDateIsNotNull();
         model.addAttribute("adverts",list);
+        model.addAttribute("brand", brandRepo);
 
         return "index";
     }

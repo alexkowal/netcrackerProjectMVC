@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service("advertService")
 public class AdvertServiceImpl implements AdvertService {
+
     @Autowired
     AdvertRepo advertRepo;
 
@@ -21,7 +22,6 @@ public class AdvertServiceImpl implements AdvertService {
     @Override
     public void saveAdvert(Advert advert) {
         advertRepo.save(advert);
-
     }
 
     @Override

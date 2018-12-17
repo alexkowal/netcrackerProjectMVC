@@ -31,10 +31,13 @@
 <tr th:each="advert : ${adverts}">
     <td>
         <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
-        <div  th:text="${advert.getTitle()}"/>
-        <div  th:text="${advert.getMileage()}"/>
-        <div  th:text="${advert.getDescription()}"/>
-        <div  th:text="${advert.getAddDate()}"/>
+        <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
+
+        <a> Название объявления <div  th:text= "${advert.getTitle()}"/></a>
+        <div Пробег   th:text="${advert.getMileage()}"/>
+        <div Пробег   th:text="${brand.findByBrandId(advert.getBrandId()).getName()}"/>
+        <div Описание  th:text="${advert.getDescription()}"/>
+        <div Дата создания  th:text="${advert.getAddDate()}"/>
     </td>
 </tr>
 

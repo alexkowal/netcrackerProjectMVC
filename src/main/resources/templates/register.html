@@ -1,18 +1,46 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <title>Spring Security Example </title>
 </head>
 <body>
 
-<form th:action="@{/register}" method="post">
-    <div><label> User Name : <input type="text" name="login"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><label> Name: <input type="text" name="userName"/> </label></div>
-    <div><label> email: <input type="text" name="email"/> </label></div>
+<form th:action="@{/register}" th:object="${User}" method="post">
 
-    <div><input type="submit" value="Apply"/></div>
+    <table>
+        <tr>
+            <td>Loign<input type="text" th:field="*{login}"/></td>
+            <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login must be between 8 and 25 char</td>
+        </tr>
+
+        <tr>
+            <td>Password<input type="password" th:field="*{password}"/></td>
+            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                Password must be longer then 8 symbols
+            </td>
+        </tr>
+
+        <tr>
+            <td>Confirm Password<input type="password" th:field="*{confirmpassword}"/></td>
+            <td th:if="${#fields.hasErrors('confirmpassword')}" th:errors="*{confirmpassword}">
+                Password must be longer then 8 symbols</td>
+
+        </tr>
+
+        <tr>
+            <td>Enter name<input type="text" th:field="*{userName}"/></td>
+        </tr>
+
+        <tr>
+            <td>Enter email<input type="text" th:field="*{email}"/></td>
+            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                Email should be formatted as abc@domain.com
+        </tr>
+    </table>
+    <input type="submit" value="Apply"/>
+
+
 </form>
 </body>
 </html>

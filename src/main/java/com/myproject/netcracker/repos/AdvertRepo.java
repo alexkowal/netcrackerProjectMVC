@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface AdvertRepo extends JpaRepository<Advert, Long> {
     Advert findByOwnerId(Long id);
+
     List<Advert> findAllByAddDateIsNotNull();
+
+
+
+    //List<Advert> findAllByOwnerId();
 
 }
