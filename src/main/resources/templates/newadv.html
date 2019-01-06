@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Adwert</title>
+
+</head>
+<body>
+
+<a th:if="${advert.getBrandId()} == null">
+    <form name='f' th:action="@{/newadv}" th:object="${advert}" method='POST'>
+        <table>
+            <tr>
+                <td>Название объявления <input type="text" th:field="*{title}"/></td>
+            </tr>
+            <tr>
+                <td>Описание <input type="text" th:field="*{description}"/></td>
+            </tr>
+            <tr>
+                <td>Select brand:
+
+                    <select th:field="*{brandId}" onselect="this.form.submit()">
+                        <option value=""> --</option>
+                        <option th:each="brand : ${brands}"
+                                th:value="${brand.brandId}"
+                                th:utext="${brand.name}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Apply"/>
+    </form>
+</a>
+
+<a th:if="${advert.getBrandId()} !=null">
+    <a th:if="${advert.getModelId()} ==null">
+        <form name='selected brand' th:action="@{'/newadv/'+ brandParam}" th:object="${advert}" method='POST'>
+            <table>
+                <tr>
+                    <a> Название объявления:
+                        <div th:text="${advert.getTitle()}"/>
+                    </a>
+                </tr>
+
+                <tr>
+                    <a> Описание:
+                        <div th:text="${advert.getDescription()}"/>
+                    </a>
+                </tr>
+
+
+                <tr>
+                    <a> Brand
+                        <div th:text="${advert.getBrandId()}"/>
+                    </a>
+                </tr>
+
+                <tr>
+                    <td>Select model:
+                        <select th:field="*{modelId}">
+                            <option value=""> --</option>
+                            <option th:each="model : ${models}"
+                                    th:value="${model.modelId}"
+                                    th:utext="${model.name}"></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Apply"/>
+        </form>
+    </a>
+</a>
+
+
+<a th:if="${advert.getModelId()} !=null">
+    <form name='charact' th:action="@{'/newadv/'+ brandParam + '/' + modelParam}" th:object="${advert}" method='POST'>
+        <table>
+            <tr>
+                <a> Название объявления:
+                    <div th:text="${advert.getTitle()}"/>
+                </a>
+            </tr>
+
+            <tr>
+                <a> Описание:
+                    <div th:text="${advert.getDescription()}"/>
+                </a>
+            </tr>
+
+
+            <tr>
+                <a> Выбранная марка
+                    <div th:text="${advert.getBrandId()}"/>
+                </a>
+            </tr>
+
+            <tr>
+                <a> Выбранная модель
+                    <div th:text="${advert.getModelId()}"/>
+                </a>
+            </tr>
+
+            <tr>
+                <td>Выберите комплетацию автомобиля:
+                    <select th:field="*{charactId}">
+                        <option value=""> --</option>
+                        <option th:each="charact : ${charact}"
+                                th:value="${charact.charactId}"
+                                th:utext="${charact.body} + ' ' +  ${charact.transmission} +
+                                ' ' + ${charact.driveUnit} + ' ' + ${charact.power}"></option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Пробег:<input type="text" th:field="${advert.mileage}"/></td>
+            </tr>
+            <tr>
+                <td>Год выпуска:<input type="text" th:field="${advert.factYear}"/></td>
+            </tr>
+            <tr>
+                <td>Цена:<input type="text" th:field="${advert.costVal}"/></td>
+            </tr>
+
+
+            <!--  <tr>
+                  <td>Select transmission:
+                      <select th:field="*{charactId}">
+                          <option value=""> &#45;&#45;</option>
+                          <option th:each="charact : ${charact}"
+                                  th:value="${charact.transmission}">
+                                  &lt;!&ndash;th:utext="${charact.name}">&ndash;&gt;</option>
+                      </select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td>Select drive unit:
+                      <select th:field="*{charactId}">
+                          <option value=""> &#45;&#45;</option>
+                          <option th:each="charact : ${charact}"
+                                  th:value="${charact.driveUnit}">
+                                  &lt;!&ndash;th:utext="${charact.name}">&ndash;&gt;</option>
+                      </select>
+                  </td>
+              </tr>
+  -->
+
+        </table>
+        <input type="submit" value="Apply"/>
+    </form>
+</a>
+
+
+</body>
+</html>

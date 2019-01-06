@@ -5,43 +5,42 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "ad_mark")
 public class Mark {
-    @Entity
-    @Table(name = "ad_mark")
-    public class Brand {
+    @Id
+    @Column(name = "id_mark")
+    private Long markId;
 
-        @Id
-        @Column(name = "id_mark")
-        private Long MarkId;
+    @Column(name = "id_user")
+    private Long userId;
 
-        @Column(name = "id_user")
-        private Long UserId;
+    @Column(name = "id_adv")
+    private Long advId;
 
-        @Column(name = "id_adv")
-        private Long AdvId;
-
-        public Long getMarkId() {
-            return MarkId;
-        }
-
-        public void setMarkId(Long markId) {
-            MarkId = markId;
-        }
-
-        public Long getUserId() {
-            return UserId;
-        }
-
-        public void setUserId(Long userId) {
-            UserId = userId;
-        }
-
-        public Long getAdvId() {
-            return AdvId;
-        }
-
-        public void setAdvId(Long advId) {
-            AdvId = advId;
-        }
+    public Long getMarkId() {
+        return markId;
     }
+
+    public void setMarkId(Long markId) {
+        this.markId = markId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getAdvId() {
+        return advId;
+    }
+
+    public void setAdvId(Long advId) {
+        this.advId = advId;
+    }
+
 }

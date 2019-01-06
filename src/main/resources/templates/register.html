@@ -10,7 +10,7 @@
 
     <table>
         <tr>
-            <td>Loign<input type="text" th:field="*{login}"/></td>
+            <td>Login<input type="text" th:field="*{login}"/></td>
             <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login must be between 8 and 25 char</td>
         </tr>
 
@@ -39,8 +39,6 @@
         </tr>
     </table>
     <input type="submit" value="Apply"/>
-
-
 </form>
 </body>
 </html>

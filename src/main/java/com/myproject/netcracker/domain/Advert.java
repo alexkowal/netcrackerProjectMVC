@@ -3,6 +3,7 @@ package com.myproject.netcracker.domain;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "ad_advert")
@@ -20,26 +21,26 @@ public class Advert {
     @Column(name = "description")
     private String description;
     @Column(name = "add_date")
-    private String addDate;
+    private LocalDate addDate;
 
     @Column(name = "id_brand")
-    private String brandId;
+    private Long brandId;
 
     @Column(name = "id_model")
-    private String modelId;
+    private Long modelId;
 
     @Column(name = "id_charact")
-    private String charactId;
+    private Integer charactId;
 
     @Column(name = "mileage")
-    private String mileage;
+    private Integer mileage;
 
     @Column(name = "cost_val")
-    private String costVal;
+    private Integer costVal;
 
 
     @Column(name = "fact_year")
-    private String factYear;
+    private Integer factYear;
 
     public Long getId() {
         return id;
@@ -73,59 +74,59 @@ public class Advert {
         this.description = description;
     }
 
-    public String getAddDate() {
+    public LocalDate getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(String addDate) {
+    public void setAddDate(LocalDate addDate) {
         this.addDate = addDate;
     }
 
-    public String getBrandId() {
+    public Long getBrandId() {
         return brandId;
     }
 
-    public void setBrandId(String brandId) {
+    public void setBrandId(Long brandId) {
         this.brandId = brandId;
     }
 
-    public String getModelId() {
+    public Long getModelId() {
         return modelId;
     }
 
-    public void setModelId(String modelId) {
+    public void setModelId(Long modelId) {
         this.modelId = modelId;
     }
 
-    public String getCharactId() {
+    public Integer getCharactId() {
         return charactId;
     }
 
-    public void setCharactId(String charactId) {
+    public void setCharactId(Integer charactId) {
         this.charactId = charactId;
     }
 
-    public String getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
-    public void setMileage(String mileage) {
+    public void setMileage(Integer mileage) {
         this.mileage = mileage;
     }
 
-    public String getCostVal() {
+    public Integer getCostVal() {
         return costVal;
     }
 
-    public void setCostVal(String costVal) {
+    public void setCostVal(Integer costVal) {
         this.costVal = costVal;
     }
 
-    public String getFactYear() {
+    public Integer getFactYear() {
         return factYear;
     }
 
-    public void setFactYear(String factYear) {
+    public void setFactYear(Integer factYear) {
         this.factYear = factYear;
     }
 }

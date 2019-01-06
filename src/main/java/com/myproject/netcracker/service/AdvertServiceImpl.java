@@ -25,7 +25,7 @@ public class AdvertServiceImpl implements AdvertService {
     }
 
     @Override
-    public List<Advert> findAllByAddDateIsNotNull() {
+    public List<List<Advert>> findAllByAddDateIsNotNull() {
         return advertRepo.findAllByAddDateIsNotNull();
     }
 
