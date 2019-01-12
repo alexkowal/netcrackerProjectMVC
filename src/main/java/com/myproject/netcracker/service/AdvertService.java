@@ -13,6 +13,6 @@ public interface AdvertService {
 
 
    // List<Advert> findAllByOwnerId(Long id);
-
-    List<List<Advert>> findAllByAddDateIsNotNull();
+/*
+    List<Advert> findAllByAddDateIsNotNull();*/
 }

@@ -17,9 +17,9 @@
 <header>
     <nav>
         <ul>
-            <li> <a th:href="@{/lk}"> личный кабинет</a></li>
-            <li> <a th:href="@{/register}"> Регистрация</a></li>
-            <li> <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> подать объялвение</a></li>
+            <li><a th:href="@{/lk}"> личный кабинет</a></li>
+            <li><a th:href="@{/register}"> Регистрация</a></li>
+            <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> подать объялвение</a>
             <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
             <li th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
                 <input type="submit" value="Sign Out"/>
@@ -31,38 +31,118 @@
 <body>
 
 
-<tr th:each="advert : ${adverts}">
-    <td>
-        <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
-        <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
+<form name='filter' th:action="@{/index}" th:object="${filter}" method='POST'>
 
-        <a> Название объявления
-            <div th:text="${advert.getTitle()}"/>
+    <table>
+
+        <a th:if="${filter.getBrandId()} == null">
+            <tr>
+                <td>Select brand:
+
+                    <select th:field="*{brandId}" onselect="this.form.submit()">
+                        <option value=""> --</option>
+                        <option th:each="brand : ${brands.findAllByBrandIdIsNotNull()}"
+                                th:value="${brand.brandId}"
+                                th:utext="${brand.name}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
         </a>
-        <br>
-        <a>Пробег
-            <div th:text="${advert.getMileage()}"/>
+
+        <a th:if="${filter.getBrandId()} != null and ${filter.getModelId()}==null">
+
+            <tr>
+                <td>Select model:
+
+                    <select th:field="*{modelId}" onselect="this.form.submit()">
+                        <option value=""> --</option>
+                        <option th:each="model : ${model}"
+                                th:value="${model.modelId}"
+                                th:utext="${model.name}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
         </a>
-        <br>
-        <a>
-            Бренд
-            <div th:text="${brand.findByBrandId(advert.getBrandId()).getName()}"/>
+
+        <a th:if="${filter.getModelId()} != null">
+
+            <tr>
+                <td>Select charact:
+
+                    <select th:field="*{charactId}" onselect="this.form.submit()">
+                        <option value=""> --</option>
+                        <option th:each="charact : ${charact}"
+                                th:value="${charact.charactId}"
+                                th:utext="${charact.body} + ' ' +  ${charact.transmission} +
+                                ' ' + ${charact.driveUnit} + ' ' + ${charact.power}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
         </a>
-        <br>
-        <a>
-            Описание
-            <div th:text="${advert.getDescription()}"/>
-        </a>
-        <br>
-        <a>Дата создания
-            <div th:text="${advert.getAddDate()}"/>
-        </a>
-        <br>
-        <br>
-        <br>
-    </td>
-</tr>
+
+        <tr>
+            <td>Пробег от:<input type="number" th:field="*{minMileage}" th:default="0"/></td>
+            <td>до:<input type="number" th:field="*{maxMileage}" th:default="100000000"/></td>
+
+        </tr>
+
+        <tr>
+            <td>Стоимость от:<input type="number" th:field="*{minCost}" th:default="0"/></td>
+            <td>до:<input type="number" th:field="*{maxCost}" th:default="100000000"/></td>
+        </tr>
+        <tr>
+            <td>Мощность от:<input type="number" th:field="*{minCost}" th:default="0"/></td>
+            <td>до:<input type="number" th:field="*{maxCost}" th:default="100000000"/></td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <input type="submit" value="Apply"/>
+                <a th:href="@{/resetfilter}">Reset</a>
+
+            </td>
+        </tr>
+
+    </table>
+
+    <tr th:each="advert : ${adverts}">
+        <td>
+            <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
+            <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
+
+            <a> Название объявления
+                <div th:text="${advert.getTitle()}"/>
+            </a>
+            <br>
+            <a>Пробег
+                <div th:text="${advert.getMileage()}"/>
+            </a>
+            <br>
+            <a>
+                Бренд
+                <div th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/>
+            </a>
+            <br>
+            <a>
+                Описание
+                <div th:text="${advert.getDescription()}"/>
+            </a>
+            <br>
+            <a>Дата создания
+                <div th:text="${advert.getAddDate()}"/>
+            </a>
+            <br>
+            <br>
+            <br>
+        </td>
+    </tr>
 
 </form>
+
+
 </body>
 </html>

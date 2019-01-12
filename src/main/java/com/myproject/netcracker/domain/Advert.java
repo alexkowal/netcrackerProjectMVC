@@ -30,7 +30,7 @@ public class Advert {
     private Long modelId;
 
     @Column(name = "id_charact")
-    private Integer charactId;
+    private Long charactId;
 
     @Column(name = "mileage")
     private Integer mileage;
@@ -98,11 +98,11 @@ public class Advert {
         this.modelId = modelId;
     }
 
-    public Integer getCharactId() {
+    public Long getCharactId() {
         return charactId;
     }
 
-    public void setCharactId(Integer charactId) {
+    public void setCharactId(Long charactId) {
         this.charactId = charactId;
     }
 

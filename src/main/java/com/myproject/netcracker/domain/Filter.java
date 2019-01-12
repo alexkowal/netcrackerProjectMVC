@@ -4,6 +4,13 @@ public class Filter {
     Long brandId;
     Long modelId;
     Long charactId;
+    Integer minMileage;
+
+
+
+    Integer maxMileage;
+
+
     Integer minCost;
     Integer maxCost;
     String bodyType;
@@ -84,16 +91,52 @@ public class Filter {
     }
 
 
-    public Filter(Long brandId, Long modelId, Long charactId, Integer minCost, Integer maxCost, String bodyType, String transmissionType, String driveUnite, Integer power) {
+    public Filter(Long brandId, Long modelId, Long charactId, Integer minMileage, Integer maxMileage, Integer minCost, Integer maxCost, String bodyType, String transmissionType, String driveUnite, Integer power) {
         this.brandId = brandId;
         this.modelId = modelId;
         this.charactId = charactId;
+        this.minMileage = minMileage;
+        this.maxMileage = maxMileage;
         this.minCost = minCost;
         this.maxCost = maxCost;
         this.bodyType = bodyType;
         this.transmissionType = transmissionType;
         this.driveUnite = driveUnite;
         this.power = power;
+    }
+
+    public Integer getMinMileage() {
+        return minMileage;
+    }
+
+    public void setMinMileage(Integer minMileage) {
+        this.minMileage = minMileage;
+    }
+
+    public Integer getMaxMileage() {
+        return maxMileage;
+    }
+
+    public void setMaxMileage(Integer maxMileage) {
+        this.maxMileage = maxMileage;
+    }
+
+    public Filter() {
+
+    }
+
+   public void remove(){
+        this.brandId = null;
+        this.modelId = null;
+        this.charactId = null;
+        this.minCost = null;
+        this.maxCost = null;
+        this.bodyType = null;
+        this.minMileage = null;
+        this.maxMileage = null;
+        this.transmissionType = null;
+        this.driveUnite = null;
+        this.power = null;
     }
 
     Integer power;

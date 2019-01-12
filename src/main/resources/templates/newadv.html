@@ -11,12 +11,15 @@
 <a th:if="${advert.getBrandId()} == null">
     <form name='f' th:action="@{/newadv}" th:object="${advert}" method='POST'>
         <table>
+
             <tr>
                 <td>Название объявления <input type="text" th:field="*{title}"/></td>
             </tr>
+
             <tr>
                 <td>Описание <input type="text" th:field="*{description}"/></td>
             </tr>
+
             <tr>
                 <td>Select brand:
 
@@ -29,6 +32,7 @@
                     </select>
                 </td>
             </tr>
+
         </table>
         <input type="submit" value="Apply"/>
     </form>
@@ -115,13 +119,13 @@
             </tr>
 
             <tr>
-                <td>Пробег:<input type="text" th:field="${advert.mileage}"/></td>
+                <td>Пробег:<input type="number" th:field="${advert.mileage}"/></td>
             </tr>
             <tr>
-                <td>Год выпуска:<input type="text" th:field="${advert.factYear}"/></td>
+                <td>Год выпуска:<input type="number" th:field="${advert.factYear}"/></td>
             </tr>
             <tr>
-                <td>Цена:<input type="text" th:field="${advert.costVal}"/></td>
+                <td>Цена:<input type="number" th:field="${advert.costVal}"/></td>
             </tr>
 
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service("advertService")
 public class AdvertServiceImpl implements AdvertService {
@@ -24,10 +25,11 @@ public class AdvertServiceImpl implements AdvertService {
         advertRepo.save(advert);
     }
 
+/*
     @Override
-    public List<List<Advert>> findAllByAddDateIsNotNull() {
+    public Set<Advert> findAllByAddDateIsNotNull() {
         return advertRepo.findAllByAddDateIsNotNull();
-    }
+    }*/
 
     /*@Override
     public List<Advert> findAll() {
