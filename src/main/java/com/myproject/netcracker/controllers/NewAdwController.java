@@ -124,7 +124,6 @@ public class NewAdwController {
         return "photoUpload";
     }
 
-
     @PostMapping("/upload")
     public String postUpload(@ModelAttribute(name = "advert") Advert advert, Model model) {
 
