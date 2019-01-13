@@ -17,9 +17,9 @@
 <header>
     <nav>
         <ul>
-            <li><a th:href="@{/lk}"> личный кабинет</a></li>
+            <li><a th:href="@{/lk}"> Личный кабинет</a></li>
             <li><a th:href="@{/register}"> Регистрация</a></li>
-            <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> подать объялвение</a>
+            <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
             <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
             <li th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
                 <input type="submit" value="Sign Out"/>
@@ -37,7 +37,7 @@
 
         <a th:if="${filter.getBrandId()} == null">
             <tr>
-                <td>Select brand:
+                <td>Марка:
 
                     <select th:field="*{brandId}" onselect="this.form.submit()">
                         <option value=""> --</option>
@@ -53,7 +53,7 @@
         <a th:if="${filter.getBrandId()} != null and ${filter.getModelId()}==null">
 
             <tr>
-                <td>Select model:
+                <td>Модель:
 
                     <select th:field="*{modelId}" onselect="this.form.submit()">
                         <option value=""> --</option>
@@ -69,7 +69,7 @@
         <a th:if="${filter.getModelId()} != null">
 
             <tr>
-                <td>Select charact:
+                <td>Комплектация:
 
                     <select th:field="*{charactId}" onselect="this.form.submit()">
                         <option value=""> --</option>
@@ -82,6 +82,33 @@
                 </td>
             </tr>
         </a>
+
+        <tr>
+            <td>Тип КПП:
+
+                <select th:field="*{transmissionType}" onselect="this.form.submit()">
+                    <option value=""> --</option>
+                    <option th:each="transmissionType : ${transmissionTypes}"
+                            th:value="${transmissionType}"
+                            th:utext="${transmissionType}"
+                            th:default=null>
+                    </option>
+                </select>
+            </td>
+
+            <td>Тип привода:
+
+                <select th:field="*{driveUnite}" onselect="this.form.submit()">
+                    <option value=""> --:</option>
+                    <option th:each="driveUnite : ${driveUnits}"
+                            th:value="${driveUnite}"
+                            th:utext="${driveUnite}"
+                            th:default=null>
+                    </option>
+                </select>
+            </td>
+        </tr>
+
 
         <tr>
             <td>Пробег от:<input type="number" th:field="*{minMileage}" th:default="0"/></td>

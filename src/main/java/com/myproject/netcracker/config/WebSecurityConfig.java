@@ -12,7 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import javax.sql.DataSource;
@@ -24,11 +26,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    public PasswordEncoder BCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
+                .passwordEncoder(BCryptPasswordEncoder())
+                //  .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .usersByUsernameQuery("select login as login,password as password, 'true' as enabled from ad_users where login = ?")
                 .authoritiesByUsernameQuery("select u.login,r.descr from ad_users u inner join ad_role r on u.id_role = r.id_role where u.login = ?");
     }
@@ -37,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/register","/resetfilter").permitAll()  //, "/newadv/*", "/newadv","/newadv/**/**"
+                .antMatchers("/", "/login", "/register", "/resetfilter").permitAll()  //, "/newadv/*", "/newadv","/newadv/**/**"
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

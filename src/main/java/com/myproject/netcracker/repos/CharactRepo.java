@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface CharactRepo extends JpaRepository<Charact, Long> {
 
+
+    Charact findCharactByCharactId(Long id);
+
     Charact findCharactByBrandId(Long id);
 
     Charact findCharactByModelId(Long id);

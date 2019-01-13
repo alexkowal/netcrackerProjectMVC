@@ -12,10 +12,12 @@ public class Picture {
     @Column(name = "id_pict")
     private Long pictId;
 
+    @Column(name = "id_adv")
+    private Long advertId;
+
 
     @Column(name = "pict_path")
     private String path;
-
 
     public Long getPictId() {
         return pictId;
@@ -41,7 +43,5 @@ public class Picture {
         this.advertId = advertId;
     }
 
-    @Column(name = "id_adv")
-    private Long advertId;
 
 }

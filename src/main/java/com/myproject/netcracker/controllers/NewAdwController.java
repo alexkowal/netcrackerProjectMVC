@@ -116,8 +116,18 @@ public class NewAdwController {
         status.setComplete();
         advertRepo.save(advert);
         return "redirect:/lk";
-
     }
 
+    @GetMapping("/upload")
+    public String upload(@ModelAttribute(name = "advert") Advert advert, Model model) {
+
+        return "photoUpload";
+    }
+
+    @PostMapping("/upload")
+    public String postUpload(@ModelAttribute(name = "advert") Advert advert, Model model) {
+
+        return "photoUpload";
+    }
 
 }

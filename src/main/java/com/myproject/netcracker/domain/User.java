@@ -2,7 +2,6 @@ package com.myproject.netcracker.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "ad_users")
@@ -17,11 +16,9 @@ public class User {
     @Size(min = 8, max = 32)
     private String login;
 
-    @Size(min = 8, max = 32)
     private String password;
 
     @NotNull
-    @Size(min = 8, max = 32)
     private String confirmpassword;
 
     private String userName;
@@ -32,10 +29,8 @@ public class User {
     private Long id_role;
 
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+
+
 
 
     public Long getIdUser() {
@@ -102,11 +97,5 @@ public class User {
         this.id_role = id_role;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }
