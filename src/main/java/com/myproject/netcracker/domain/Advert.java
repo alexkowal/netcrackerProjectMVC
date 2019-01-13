@@ -18,6 +18,7 @@ public class Advert {
     @Column(name = "title")
     private String title;
 
+
     @Column(name = "description")
     private String description;
     @Column(name = "add_date")
@@ -39,8 +40,12 @@ public class Advert {
     private Integer costVal;
 
 
+
     @Column(name = "fact_year")
     private Integer factYear;
+
+    @Column(name = "isactive")
+    private Boolean isactive;
 
     public Long getId() {
         return id;
@@ -128,5 +133,53 @@ public class Advert {
 
     public void setFactYear(Integer factYear) {
         this.factYear = factYear;
+    }
+
+
+
+    public Boolean getIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(Boolean isactive) {
+        this.isactive = isactive;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Advert advert = (Advert) o;
+
+        if (!id.equals(advert.id)) return false;
+        if (!ownerId.equals(advert.ownerId)) return false;
+        if (!title.equals(advert.title)) return false;
+        if (!description.equals(advert.description)) return false;
+        if (!addDate.equals(advert.addDate)) return false;
+        if (!brandId.equals(advert.brandId)) return false;
+        if (!modelId.equals(advert.modelId)) return false;
+        if (!charactId.equals(advert.charactId)) return false;
+        if (!mileage.equals(advert.mileage)) return false;
+        if (!costVal.equals(advert.costVal)) return false;
+        if(!isactive.equals(advert.isactive))return false;
+        return factYear.equals(advert.factYear);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + ownerId.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + addDate.hashCode();
+        result = 31 * result + brandId.hashCode();
+        result = 31 * result + modelId.hashCode();
+        result = 31 * result + charactId.hashCode();
+        result = 31 * result + mileage.hashCode();
+        result = 31 * result + isactive.hashCode();
+        result = 31 * result + costVal.hashCode();
+        result = 31 * result + factYear.hashCode();
+        return result;
     }
 }

@@ -28,9 +28,15 @@ public class User {
 
     private Long id_role;
 
+    public Boolean getIsactive() {
+        return isactive;
+    }
 
+    public void setIsactive(Boolean isactive) {
+        this.isactive = isactive;
+    }
 
-
+    private Boolean isactive;
 
 
     public Long getIdUser() {

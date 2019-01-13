@@ -112,7 +112,7 @@ public class NewAdwController {
                           Model model, @PathVariable String brandParam,
                           @PathVariable String modelParam, SessionStatus status) {
 
-
+        advert.setIsactive(true);
         status.setComplete();
         advertRepo.save(advert);
         return "redirect:/lk";
@@ -123,6 +123,7 @@ public class NewAdwController {
 
         return "photoUpload";
     }
+
 
     @PostMapping("/upload")
     public String postUpload(@ModelAttribute(name = "advert") Advert advert, Model model) {

@@ -9,4 +9,6 @@ public interface UserService {
     void saveUser(User user);
     List<User> findAllUsers();
     boolean isUserExist(User user);
+    void updateUser(User user);
+
 }

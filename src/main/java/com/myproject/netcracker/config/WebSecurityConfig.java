@@ -36,9 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(BCryptPasswordEncoder())
-                //  .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .usersByUsernameQuery("select login as login,password as password, 'true' as enabled from ad_users where login = ?")
-                .authoritiesByUsernameQuery("select u.login,r.descr from ad_users u inner join ad_role r on u.id_role = r.id_role where u.login = ?");
+                .authoritiesByUsernameQuery("select u.login,r.descr from ad_users u inner join ad_role r on u.id_role = r.id_role where u.login = ? and u.isactive = true");
     }
 
     @Override
@@ -55,5 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/index")
                 .permitAll();
+
     }
 }

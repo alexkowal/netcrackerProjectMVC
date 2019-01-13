@@ -34,4 +34,6 @@ public class UserServiceImpl implements UserService {
     public boolean isUserExist(User user) {
         return false;
     }
+    @Override
+    public void updateUser(User user){}
 }

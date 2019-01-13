@@ -59,7 +59,7 @@ public class RegisterController {
         }
         user.setPassword(bcryptEncoder.encode(user.getPassword()));
         user.setConfirmpassword(bcryptEncoder.encode(user.getConfirmpassword()));
-
+        user.setIsactive(true);
         user.setIdRole(1l);
         userRepo.save(user);
         return "redirect:/login";
