@@ -12,7 +12,7 @@ public class Advert {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_adv")
-    private Long id;
+    private Long advId;
     @Column(name = "id_owner")
     private Long ownerId;
     @Column(name = "title")
@@ -47,12 +47,12 @@ public class Advert {
     @Column(name = "isactive")
     private Boolean isactive;
 
-    public Long getId() {
-        return id;
+    public Long getAdvId() {
+        return advId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAdvId(Long advId) {
+        this.advId = advId;
     }
 
     public Long getOwnerId() {
@@ -152,7 +152,7 @@ public class Advert {
 
         Advert advert = (Advert) o;
 
-        if (!id.equals(advert.id)) return false;
+        if (!advId.equals(advert.advId)) return false;
         if (!ownerId.equals(advert.ownerId)) return false;
         if (!title.equals(advert.title)) return false;
         if (!description.equals(advert.description)) return false;
@@ -168,7 +168,7 @@ public class Advert {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = advId.hashCode();
         result = 31 * result + ownerId.hashCode();
         result = 31 * result + title.hashCode();
         result = 31 * result + description.hashCode();

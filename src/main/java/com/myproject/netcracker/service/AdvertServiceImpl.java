@@ -16,8 +16,13 @@ public class AdvertServiceImpl implements AdvertService {
 
 
     @Override
-    public Advert findByOwnerId(Long id) {
-        return advertRepo.findByOwnerId(id);
+    public List<Advert> findAllByOwnerId(Long id) {
+        return advertRepo.findAllByOwnerId(id);
+    }
+
+    @Override
+    public Set<Advert> findAllByAddDateIsNotNull() {
+        return advertRepo.findAllByAddDateIsNotNull();
     }
 
     @Override

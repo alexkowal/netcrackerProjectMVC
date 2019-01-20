@@ -16,10 +16,17 @@
 </header>
 
 <body>
-<form name="userBan" th:action="@{/admin}" th:object="${user}" method="post">
+<form name="userBan" th:action="@{/admin/userban}" th:object="${user}" method="post">
     <input type="text" th:field="*{login}" />
     <input type="submit" value="Ok"/>
 </form>
+
+
+<form name="userBan" th:action="@{/admin/advban}" th:object="${advert}" method="post">
+    <input type="text" th:field="*{advId}"/>
+    <input type="submit" value="Ok"/>
+</form>
+
 
 </body>
 </html>

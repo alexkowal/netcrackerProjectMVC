@@ -3,6 +3,7 @@ package com.myproject.netcracker.controllers;
 import com.myproject.netcracker.domain.Advert;
 import com.myproject.netcracker.domain.Charact;
 import com.myproject.netcracker.domain.Filter;
+import com.myproject.netcracker.domain.Picture;
 import com.myproject.netcracker.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,9 @@ public class IndexController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    PictureRepo pictureRepo;
+
 
     @ModelAttribute
     public Filter createFilter() {
@@ -47,6 +51,8 @@ public class IndexController {
         Set<Advert> removeList = new HashSet<>();
 
         for (Advert advert : adverts) {
+            if (!advert.getIsactive())
+                removeList.add(advert);
             if (advert.getBrandId() != null && myfilter.getBrandId() != null)
                 if (advert.getBrandId() != myfilter.getBrandId())
                     //  adverts.remove(advert);
@@ -108,6 +114,13 @@ public class IndexController {
         for (Advert rem : removeList)
             adverts.remove(rem);
 
+
+        List<Picture> pictures = new ArrayList<>();
+        for (Advert advert : adverts) {
+            pictures.addAll(pictureRepo.findByAdvertId(advert.getAdvId()));
+        }
+
+
         Set<Charact> characts = new HashSet<>();
         characts.addAll(charactRepo.findAllByBrandIdIsNotNull());
 
@@ -122,8 +135,12 @@ public class IndexController {
         }
 
 
+        model.addAttribute("pictures", pictures);
+        model.addAttribute("pictRepo",pictureRepo);
+
         model.addAttribute("adverts", adverts);
         model.addAttribute("brands", brandRepo);
+
         model.addAttribute("model", modelRepo.findAllByBrandId(myfilter.getBrandId()));
         model.addAttribute("charact", charactRepo.findAllByBrandIdAndAndModelId(myfilter.getBrandId(), myfilter.getModelId()));
         model.addAttribute("transmissionTypes", transmissionTypes);

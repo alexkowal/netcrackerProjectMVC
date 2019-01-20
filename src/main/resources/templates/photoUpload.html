@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Загрузка изображений</title>
 </head>
 <body>
-<form name="upload" method="post" enctype="multipart/form-data">
+<form name="upload" th:action="@{/upload}" method="post" enctype="multipart/form-data">
 
-    <input type="file" name="file">
+    <input type="file" th:object="${file1}" name="file1" ><br>
+    <input type="file" th:object="${file2}" name="file2" ><br>
+    <input type="file" th:object="${file3}" name="file3" ><br>
+    <input type="file" th:object="${file4}" name="file4" ><br>
+    <input type="file" th:object="${file5}" name="file5" ><br>
+
+    <input type="submit">
 </form>
 </body>
 </html>

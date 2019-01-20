@@ -8,8 +8,8 @@ import java.util.Set;
 
 public interface AdvertRepo extends JpaRepository<Advert, Long> {
 
+    Advert findByAdvId(Long id);
 
-    Advert findByOwnerId(Long id);
 
     Set<Advert> findAllByAddDateIsNotNull();
 

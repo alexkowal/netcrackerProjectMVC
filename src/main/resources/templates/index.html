@@ -21,9 +21,9 @@
             <li><a th:href="@{/register}"> Регистрация</a></li>
             <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
             <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-            <li th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
+            <a th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
                 <input type="submit" value="Sign Out"/>
-            </li>
+            </a>
         </ul>
     </nav>
 </header>
@@ -138,34 +138,44 @@
 
     <tr th:each="advert : ${adverts}">
         <td>
-            <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
-            <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
 
-            <a> Название объявления
-                <div th:text="${advert.getTitle()}"/>
-            </a>
-            <br>
-            <a>Пробег
-                <div th:text="${advert.getMileage()}"/>
-            </a>
-            <br>
-            <a>
-                Бренд
-                <div th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/>
-            </a>
-            <br>
-            <a>
-                Описание
-                <div th:text="${advert.getDescription()}"/>
-            </a>
-            <br>
-            <a>Дата создания
-                <div th:text="${advert.getAddDate()}"/>
-            </a>
-            <br>
-            <br>
-            <br>
-        </td>
+    <p th:each="pict: ${pictures}"
+         th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
+            <!--<img th:src="@{${pict.getPath()}}"/>-->
+        <img src="/loadphoto/${pict.getPath()}"/>
+
+    </p>
+
+    <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
+
+    <a> Название объявления
+        <div th:text="${advert.getTitle()}"/>
+    </a>
+    <br>
+    <a>Пробег
+        <div th:text="${advert.getMileage()}"/>
+    </a>
+    <br>
+    <a>
+        Бренд
+        <div th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/>
+    </a>
+    <br>
+    <a>
+        Описание
+        <div th:text="${advert.getDescription()}"/>
+    </a>
+    <br>
+    <a>Дата создания
+        <div th:text="${advert.getAddDate()}"/>
+    </a>
+
+
+    <br>
+    <br>
+    <br>
+    </td>
     </tr>
 
 </form>

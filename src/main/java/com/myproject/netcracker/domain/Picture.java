@@ -1,16 +1,16 @@
 package com.myproject.netcracker.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ad_pict")
 public class Picture {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_pict")
     private Long pictId;
+
+
 
     @Column(name = "id_adv")
     private Long advertId;
@@ -43,5 +43,13 @@ public class Picture {
         this.advertId = advertId;
     }
 
+
+    public  void changeName(){
+        String name = this.getPath();
+        String temp = "" + Math.random()*100000000;
+        temp+=name;
+        this.setPath(name);
+
+    }
 
 }
