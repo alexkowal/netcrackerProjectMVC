@@ -142,8 +142,7 @@
             <p th:each="pict: ${pictures}"
                th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
                 <img  th:src="@{'/img/' + ${pict.getPath()}}"/>
-                <br>
-
+                </p>
                 <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
                 <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
 
