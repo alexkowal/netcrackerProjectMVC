@@ -3,6 +3,7 @@ package com.myproject.netcracker.controllers;
 import com.myproject.netcracker.domain.*;
 import com.myproject.netcracker.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,14 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @SessionAttributes("advert")
 public class NewAdwController {
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     AdvertRepo advertRepo;
@@ -43,8 +48,6 @@ public class NewAdwController {
 
     @Autowired
     PictureRepo pictureRepo;
-
-    String UPLOADED_FOLDER = "/Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/java/com/myproject/netcracker/photos/";
 
 
     @GetMapping("/newadv")
@@ -150,76 +153,104 @@ public class NewAdwController {
                              SessionStatus status) throws IOException {
 
 
-        if (file1 != null && file1.getOriginalFilename()!=null) {
+        if (file1 != null && file1.getOriginalFilename() != null) {
             Picture pict1 = new Picture();
             pict1.setAdvertId(advert.getAdvId());
 
+            File direct = new File(uploadPath);
+            if (!direct.exists())
+                direct.mkdir();
 
-            byte[] bytes = file1.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER
-                    + file1.getOriginalFilename());
+            String uuidFile = UUID.randomUUID().toString();
 
-            pict1.setPath(path.toAbsolutePath().toString());
+            String result = uuidFile + "." + file1.getOriginalFilename();
 
-            File pathFile = new File(pict1.getPath());
-            file1.transferTo(pathFile);
+            pict1.setPath(result);
 
-            Files.write(path, bytes);
+            file1.transferTo(new File(uploadPath + "/" + result));
             pictureRepo.save(pict1);
         }
+///////////FILE2
+///////////FILE2
+///////////FILE2
 
-        if (file2 != null && file2.getOriginalFilename()!=null) {
+        if (file2 != null && file2.getOriginalFilename() != null) {
             Picture pict2 = new Picture();
             pict2.setAdvertId(advert.getAdvId());
-            byte[] bytes = file2.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER
-                    + Math.random() * 1000000 + "_" + file2.getOriginalFilename());
-            pict2.setPath(path.toString());
-            pict2.setAdvertId(advert.getAdvId());
-            Files.write(path, bytes);
+
+            File direct = new File(uploadPath);
+            if (!direct.exists())
+                direct.mkdir();
+
+            String uuidFile = UUID.randomUUID().toString();
+
+            String result = uuidFile + "." + file2.getOriginalFilename();
+
+            pict2.setPath(result);
+
+            file2.transferTo(new File(uploadPath + "/" + result));
             pictureRepo.save(pict2);
         }
-        if (file3 != null && file3.getOriginalFilename()!=null) {
+
+        if (file3 != null && file3.getOriginalFilename() != null) {
             Picture pict3 = new Picture();
             pict3.setAdvertId(advert.getAdvId());
-            byte[] bytes = file3.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER
-                    + Math.random() * 1000000 + "_" + file3.getOriginalFilename());
-            pict3.setPath(path.toString());
-            pict3.setAdvertId(advert.getAdvId());
-            Files.write(path, bytes);
+
+            File direct = new File(uploadPath);
+            if (!direct.exists())
+                direct.mkdir();
+
+            String uuidFile = UUID.randomUUID().toString();
+
+            String result = uuidFile + "." + file3.getOriginalFilename();
+
+            pict3.setPath(result);
+
+            file3.transferTo(new File(uploadPath + "/" + result));
             pictureRepo.save(pict3);
         }
 
-        if (file4 != null && file4.getOriginalFilename()!=null) {
+        if (file4 != null && file4.getOriginalFilename() != null) {
             Picture pict4 = new Picture();
             pict4.setAdvertId(advert.getAdvId());
-            byte[] bytes = file4.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER
-                    + Math.random() * 1000000 + "_" + file4.getOriginalFilename());
-            pict4.setPath(path.toString());
-            pict4.setAdvertId(advert.getAdvId());
-            Files.write(path, bytes);
 
+            File direct = new File(uploadPath);
+            if (!direct.exists())
+                direct.mkdir();
+
+            String uuidFile = UUID.randomUUID().toString();
+
+            String result = uuidFile + "." + file4.getOriginalFilename();
+
+            pict4.setPath(result);
+
+            file4.transferTo(new File(uploadPath + "/" + result));
             pictureRepo.save(pict4);
         }
 
-        if (file5 != null && file5.getOriginalFilename()!=null) {
+        if (file5 != null && file5.getOriginalFilename() != null) {
             Picture pict5 = new Picture();
             pict5.setAdvertId(advert.getAdvId());
-            byte[] bytes = file5.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER
-                    + Math.random() * 1000000 + "_" + file5.getOriginalFilename());
-            pict5.setPath(path.toString());
-            pict5.setAdvertId(advert.getAdvId());
-            Files.write(path, bytes);
+
+            File direct = new File(uploadPath);
+            if (!direct.exists())
+                direct.mkdir();
+
+            String uuidFile = UUID.randomUUID().toString();
+
+            String result = uuidFile + "." + file5.getOriginalFilename();
+
+            pict5.setPath(result);
+
+            file5.transferTo(new File(uploadPath + "/" + result));
             pictureRepo.save(pict5);
         }
+
+
         status.setComplete();
-      //  advertRepo.save(advert);
+        advertRepo.save(advert);
 
         return "redirect:index";
-
 
 
     }

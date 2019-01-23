@@ -8,6 +8,7 @@ import java.util.List;
 public interface PictureRepo extends JpaRepository<Picture,Long> {
 
     List<Picture> findByAdvertId(Long id);
-
+    Picture findByPictId(Long id);
+    Picture findByPath(String path);
 
 }

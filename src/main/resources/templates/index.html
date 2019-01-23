@@ -139,43 +139,41 @@
     <tr th:each="advert : ${adverts}">
         <td>
 
-    <p th:each="pict: ${pictures}"
-         th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
-            <!--<img th:src="@{${pict.getPath()}}"/>-->
-        <img src="/loadphoto/${pict.getPath()}"/>
+            <p th:each="pict: ${pictures}"
+               th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
+                <img  th:src="@{'/img/' + ${pict.getPath()}}"/>
+                <br>
 
-    </p>
+                <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
+                <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
 
-    <!--/*@thymesVar id="getTitle" type="java.lang.String"*/-->
-    <!--/*@thymesVar id="brand" type="com.myproject.netcracker.domain.Brand"*/-->
-
-    <a> Название объявления
-        <div th:text="${advert.getTitle()}"/>
-    </a>
-    <br>
-    <a>Пробег
-        <div th:text="${advert.getMileage()}"/>
-    </a>
-    <br>
-    <a>
-        Бренд
-        <div th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/>
-    </a>
-    <br>
-    <a>
-        Описание
-        <div th:text="${advert.getDescription()}"/>
-    </a>
-    <br>
-    <a>Дата создания
-        <div th:text="${advert.getAddDate()}"/>
-    </a>
+                <a> Название объявления
+                    <div th:text="${advert.getTitle()}"/>
+                </a>
+                <br>
+                <a>Пробег
+                    <div th:text="${advert.getMileage()}"/>
+                </a>
+                <br>
+                <a>
+                    Бренд
+                    <div th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/>
+                </a>
+                <br>
+                <a>
+                    Описание
+                    <div th:text="${advert.getDescription()}"/>
+                </a>
+                <br>
+                <a>Дата создания
+                    <div th:text="${advert.getAddDate()}"/>
+                </a>
 
 
-    <br>
-    <br>
-    <br>
-    </td>
+                <br>
+                <br>
+                <br>
+        </td>
     </tr>
 
 </form>
