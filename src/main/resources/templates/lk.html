@@ -32,11 +32,30 @@
 <p th:text="${email}"> Почта</p></p>
 <p></p>
 
+
+<H1> Ваши объявления</H1>
+
 <tr th:each="advert : ${adverts}">
     <td>
         <p th:text="${advert.getTitle()}"</p>
     </td>
-</tr>
 
+
+    <table>
+        <tr
+                th:each="pict: ${pictures}"
+                th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
+            <img th:src="@{'/img/' + ${pict.getPath()}}" th:width="120" th:height="100" hspace="10"
+                 vspace="10"/>
+        </tr>
+    </table>
+
+
+</tr>
+<H1>Избранное</H1>
+<tr th:each="mark : ${marks}">
+    <a th:href="@{'/showadv/' + ${advertRepo.findByAdvId(mark.getAdvId()).getAdvId()}}"
+       th:text="${advertRepo.findByAdvId(mark.getAdvId()).getTitle()}"></a><br>
+</tr>
 </body>
 </html>

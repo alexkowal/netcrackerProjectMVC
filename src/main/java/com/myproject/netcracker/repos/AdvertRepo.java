@@ -28,4 +28,6 @@ public interface AdvertRepo extends JpaRepository<Advert, Long> {
     List<Advert> findAdvertsByCharactId(Integer id);
 
 
+
+
 }

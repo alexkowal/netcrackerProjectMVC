@@ -15,8 +15,10 @@ public class ImageConfig {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry
-                    .addResourceHandler("/img/**")
-                    .addResourceLocations("file://" + uploadPath + "/");
+                    .addResourceHandler("/img/**", "/css/**")
+                    .addResourceLocations("file://" + uploadPath + "/")
+                    .addResourceLocations("file:///Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/css/");
+
         }
     }
 }

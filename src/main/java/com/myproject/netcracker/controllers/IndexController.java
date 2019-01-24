@@ -41,6 +41,8 @@ public class IndexController {
     @Autowired
     PictureRepo pictureRepo;
 
+    @Autowired
+    MarkRepo markRepo;
 
     @ModelAttribute
     public Filter createFilter() {
@@ -141,13 +143,13 @@ public class IndexController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal() != "anonymousUser")
-            if (auth != null)
-                if (userRepo.findByLogin(auth.getName()).getIdRole() == 2)
-                    model.addAttribute("admin", true);
-                else
-                    model.addAttribute("admin", false);
-            else
+            if (userRepo.findByLogin(auth.getName()).getIdRole() == 2) {
+                model.addAttribute("admin", true);
+                model.addAttribute("userId", userRepo.findByLogin(auth.getName()).getIdUser());
+            } else {
                 model.addAttribute("admin", false);
+                model.addAttribute("userId", userRepo.findByLogin(auth.getName()).getIdUser());
+            }
         else
             model.addAttribute("admin", false);
 
@@ -159,10 +161,16 @@ public class IndexController {
         model.addAttribute("brands", brandRepo);
 
         model.addAttribute("model", modelRepo.findAllByBrandId(myfilter.getBrandId()));
+        model.addAttribute("modelRepo", modelRepo);
+
         model.addAttribute("charact", charactRepo.findAllByBrandIdAndAndModelId(myfilter.getBrandId(), myfilter.getModelId()));
+        model.addAttribute("charactRepo", charactRepo);
+
         model.addAttribute("transmissionTypes", transmissionTypes);
         model.addAttribute("bodyTypes", bodyTypes);
         model.addAttribute("driveUnits", driveUnits);
+
+        model.addAttribute("markRepo", markRepo);
 
         return "index";
     }

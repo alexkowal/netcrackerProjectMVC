@@ -6,8 +6,8 @@
 
 <header>
     <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
-    <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/index}"> Главная</a>
-
+    <a th:href="@{/index}"> Главная</a>
+    <a th:href="@{/lk}"> Личный кабинет</a></li>
     <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 
     <form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
@@ -26,9 +26,23 @@
     </tr>
 </table>
 
-<p th:each="adv : ${advert}">
-<p> Название объявления: </p>
-<div th:text="${advert.getTitle()}"/>
+<p> Год выпуска  <a  th:text="${advert.getFactYear()}"/></p>
+<p> Пробег <a th:text="${advert.getMileage()}"/> км</p>
+<p> Марка <a th:text="${brand.getName()}"/></p>
+<p> Модель <a th:text="${model.getName()}"/></p>
+<p> Тип кузова <a th:text="${charact.getBody()}"/></p>
+<p> Коробка <a th:text="${charact.getTransmission()}"/></p>
+<p> Привод <a th:text="${charact.getDriveUnit()}"/></p>
+<p> Мощность <a th:text="${charact.getPower()}"/> л.с.</p>
+<p> Описание <br> <a th:text="${advert.getDescription()}"/></p>
+<br>
+<p> Владелец <a th:text="${user.getUserName()}"/></p>
+<p> Почта <a th:text="${user.getEmail()}"/></p>
+<p> Мощность <a th:text="${charact.getPower()}"/></p>
+
+<p> Дата публикации <a th:text="${advert.getAddDate()}"/></p>
+
+
 
 </body>
 </html>
