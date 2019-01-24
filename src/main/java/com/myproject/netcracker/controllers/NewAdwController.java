@@ -153,7 +153,7 @@ public class NewAdwController {
                              SessionStatus status) throws IOException {
 
 
-        if (file1 != null && file1.getOriginalFilename() != null) {
+        if (file1.getOriginalFilename().length()>2) {
             Picture pict1 = new Picture();
             pict1.setAdvertId(advert.getAdvId());
 
@@ -174,7 +174,7 @@ public class NewAdwController {
 ///////////FILE2
 ///////////FILE2
 
-        if (file2 != null && file2.getOriginalFilename() != null) {
+        if (file2.getOriginalFilename().length()>2) {
             Picture pict2 = new Picture();
             pict2.setAdvertId(advert.getAdvId());
 
@@ -192,7 +192,7 @@ public class NewAdwController {
             pictureRepo.save(pict2);
         }
 
-        if (file3 != null && file3.getOriginalFilename() != null) {
+        if (file3.getOriginalFilename().length()>2) {
             Picture pict3 = new Picture();
             pict3.setAdvertId(advert.getAdvId());
 
@@ -210,8 +210,12 @@ public class NewAdwController {
             pictureRepo.save(pict3);
         }
 
-        if (file4 != null && file4.getOriginalFilename() != null) {
+        if (file4.getOriginalFilename().length()>2) {
+
             Picture pict4 = new Picture();
+
+            System.out.println("@@@@@@@@@@@" + file4.getOriginalFilename());
+
             pict4.setAdvertId(advert.getAdvId());
 
             File direct = new File(uploadPath);
@@ -228,7 +232,7 @@ public class NewAdwController {
             pictureRepo.save(pict4);
         }
 
-        if (file5 != null && file5.getOriginalFilename() != null) {
+        if (file5.getOriginalFilename().length()>2) {
             Picture pict5 = new Picture();
             pict5.setAdvertId(advert.getAdvId());
 
@@ -243,10 +247,10 @@ public class NewAdwController {
             pict5.setPath(result);
 
             file5.transferTo(new File(uploadPath + "/" + result));
+
             pictureRepo.save(pict5);
+
         }
-
-
         status.setComplete();
         advertRepo.save(advert);
 

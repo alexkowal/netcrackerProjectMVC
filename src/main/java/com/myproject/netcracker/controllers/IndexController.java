@@ -6,6 +6,10 @@ import com.myproject.netcracker.domain.Filter;
 import com.myproject.netcracker.domain.Picture;
 import com.myproject.netcracker.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -135,8 +139,21 @@ public class IndexController {
         }
 
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser")
+            if (auth != null)
+                if (userRepo.findByLogin(auth.getName()).getIdRole() == 2)
+                    model.addAttribute("admin", true);
+                else
+                    model.addAttribute("admin", false);
+            else
+                model.addAttribute("admin", false);
+        else
+            model.addAttribute("admin", false);
+
+
         model.addAttribute("pictures", pictures);
-        model.addAttribute("pictRepo",pictureRepo);
+        model.addAttribute("pictRepo", pictureRepo);
 
         model.addAttribute("adverts", adverts);
         model.addAttribute("brands", brandRepo);
@@ -159,10 +176,12 @@ public class IndexController {
     @GetMapping({"/resetfilter"})
     public String dropfilter(@ModelAttribute("filter") Filter myfilter, WebRequest request,
                              SessionStatus sessionStatus) {
+
         myfilter.remove();
         sessionStatus.setComplete();
         request.removeAttribute("filter", WebRequest.SCOPE_SESSION);
         return "redirect:";
+
     }
 
 

@@ -29,13 +29,13 @@ public class PhotoController {
     private String uploadPath;
 
 
-    @RequestMapping("img/{filename}")
+    @RequestMapping("/img/{filename}")
     public @ResponseBody
     byte[] getImage(@PathVariable String filename) throws IOException {
 
         Picture p = pictureRepo.findByPath(filename);
 
-        String path =uploadPath + "/"+p.getPath();
+        String path = uploadPath + "/" + p.getPath();
 
         InputStream in = getClass()
                 .getResourceAsStream(path);
@@ -44,9 +44,8 @@ public class PhotoController {
 
         File file = new File(path);
         return Files.readAllBytes(file.toPath());
-       // return IOUtils.toByteArray(in);
+        // return IOUtils.toByteArray(in);
     }
-
 
 
 }

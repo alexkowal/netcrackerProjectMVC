@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
+
+<header>
+    <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
+    <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/index}"> Главная</a>
+
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+
+    <form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</header>
+
+
+<table>
+    <tr
+            th:each="pict: ${pictures}"
+            th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
+        <img th:src="@{'/img/' + ${pict.getPath()}}" th:width="120" th:height="100" hspace="10"
+             vspace="10"/>
+
+    </tr>
+</table>
+
+<p th:each="adv : ${advert}">
+<p> Название объявления: </p>
+<div th:text="${advert.getTitle()}"/>
+
+</body>
+</html>
