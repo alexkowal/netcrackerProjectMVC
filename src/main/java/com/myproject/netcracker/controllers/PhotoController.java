@@ -46,6 +46,18 @@ public class PhotoController {
         return Files.readAllBytes(file.toPath());
         // return IOUtils.toByteArray(in);
     }
+    @RequestMapping("/css/{filename}")
+    public @ResponseBody
+    byte[] getCss(@PathVariable String filename) throws IOException {
+
+
+        String path = "/Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/css/style.css";
+        InputStream in = getClass()
+                .getResourceAsStream(path);
+        File file = new File(path);
+        return Files.readAllBytes(file.toPath());
+        // return IOUtils.toByteArray(in);
+    }
 
 
 }

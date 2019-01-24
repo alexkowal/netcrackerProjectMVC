@@ -41,10 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/register", "/resetfilter", "/img/**","/showadv/**").permitAll()  //, "/newadv/*", "/newadv","/newadv/**/**"
+                .antMatchers("/", "/login", "/register", "/resetfilter", "/img/**","/showadv/**","/css/**","/like/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -53,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/index")
-                .permitAll();
+                .permitAll()
+        ;
 
     }
 }

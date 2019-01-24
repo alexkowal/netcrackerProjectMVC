@@ -6,9 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <title>LK</title>
+
+    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <base href="/">
 </head>
 
 <header>
+
     <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
     <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/index}"> Главная</a>
 
@@ -17,19 +21,17 @@
     <form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out"/>
     </form>
+
 </header>
 
 
 <body>
 
 
-<p>Ваш логин
-<div th:text="${login}"></div>
+<p>Ваш логин: <a th:text="${login}"></a>
 </p>
-<p>Ваше имя
-<p th:text="${username}"> Имя</p></p>
-<p>Ваш email
-<p th:text="${email}"> Почта</p></p>
+<p>Ваше имя: <a th:text="${username}"> Имя</a></p>
+<p>Ваш email: <a th:text="${email}"> Почта</a></p>
 <p></p>
 
 
@@ -37,7 +39,8 @@
 
 <tr th:each="advert : ${adverts}">
     <td>
-        <p th:text="${advert.getTitle()}"</p>
+        <a th:text="${advert.getTitle()}" th:href="@{'/showadv/' + ${advert.getAdvId()}}"/>
+<br>
     </td>
 
 

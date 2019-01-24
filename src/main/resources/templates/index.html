@@ -5,12 +5,13 @@
 <html lang="en">
 
 
-<link type='text/css' rel='stylesheet' th:href="@{/css/style.css}"/>
+
 
 
 <head>
     <meta charset="UTF-8">
     <title>index</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
 </head>
 
 
@@ -143,10 +144,10 @@
 
         <p>Марка <a th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/></p>
         <p> Модель <a th:text="${modelRepo.findByModelId(advert.getModelId()).getName()}"/></p>
-        <p>Пробег <a th:text="${advert.getMileage()}"/></p>
+        <p>Пробег <a th:text="${advert.getMileage()}"/> км</p>
         <p> Тип кузова <a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getBody()}"/></p>
         <p> Привод <a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getDriveUnit()}"/></p>
-        <p> Мощность <a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getPower()}"/></p>
+        <p> Мощность <a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getPower()}"/> л.с.</p>
         <p> Стоимость <a th:text="${advert.getCostVal()}"/> р </p>
 
         <td>

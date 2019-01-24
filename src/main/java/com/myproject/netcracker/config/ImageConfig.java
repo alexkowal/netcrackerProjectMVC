@@ -15,10 +15,11 @@ public class ImageConfig {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry
-                    .addResourceHandler("/img/**", "/css/**")
-                    .addResourceLocations("file://" + uploadPath + "/")
-                    .addResourceLocations("file:///Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/css/");
-
+                    .addResourceHandler("/img/**")
+                    .addResourceLocations("file://" + uploadPath + "/", "/css/", "/resources/"
+                            , "file:///Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/css/")/*
+                    .addResourceLocations("file:///Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/css/")
+                    .addResourceLocations("/resources/")   , "/css/**"   */;
         }
     }
 }
