@@ -41,6 +41,18 @@ public class LkController {
         for (Advert advert : usersAdv) {
             pictures.addAll(pictureRepo.findByAdvertId(advert.getAdvId()));
         }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser")
+            if (userRepo.findByLogin(auth.getName()).getIdRole() == 2) {
+                model.put("admin", true);
+                model.put("userId", userRepo.findByLogin(auth.getName()).getIdUser());
+            } else {
+                model.put("admin", false);
+                model.put("userId", userRepo.findByLogin(auth.getName()).getIdUser());
+            }
+        else
+            model.put("admin", false);
+
         model.put("marks",markRepo.findAllByUserId(user.getIdUser()));
 
 

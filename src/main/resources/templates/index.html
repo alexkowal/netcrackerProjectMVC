@@ -5,33 +5,42 @@
 <html lang="en">
 
 
-
-
-
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
-    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <title>А ты продай авто</title>
+    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <base href="/">
 </head>
 
 
 <header>
-    <nav>
-        <ul>
-            <li><a th:href="@{/lk}"> Личный кабинет</a></li>
-            <li><a th:href="@{/register}"> Регистрация</a></li>
-            <a  th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
-            <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-            <form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
+    <div class="header">
+        <a th:href="@{/index}"> Главная</a>
+        <a th:href="@{/newadv}"> Подать объявление</a>
+        <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
+
+
+        <div class="header-greeting">
+            <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
+                [[${#httpServletRequest.remoteUser}]]!</p>
+        </div>
+
+        <div class="header-right">
+
+            <form th:name="logout" th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}"
+                  method="post">
                 <input type="submit" value="Sign Out"/>
             </form>
-        </ul>
-    </nav>
+
+            <form th:name="login" th:if="${#httpServletRequest.remoteUser} == null" th:action="@{/login}" method="post">
+                <input type="submit" value="Sign In"/>
+            </form>
+        </div>
+    </div>
+    <hr>
 </header>
 
 <body>
-
-
 <form name='filter' th:action="@{/index}" th:object="${filter}" method='POST'>
 
     <table>
@@ -176,7 +185,5 @@
 
 
 </form>
-
-
 </body>
 </html>

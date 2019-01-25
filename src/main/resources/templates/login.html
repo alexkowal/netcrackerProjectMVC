@@ -1,9 +1,41 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
-    <title>Login page </title>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <base href="/">
 </head>
+
+<header>
+    <div class="header">
+        <a th:href="@{/index}"> Главная</a>
+        <a th:href="@{/newadv}"> Подать объявление</a>
+        <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
+
+
+        <div class="header-greeting">
+            <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
+                [[${#httpServletRequest.remoteUser}]]!</p>
+        </div>
+
+        <div class="header-right">
+
+            <form th:name="logout" th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}"
+                  method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+
+            <form th:name="login" th:if="${#httpServletRequest.remoteUser} == null" th:action="@{/login}" method="post">
+                <input type="submit" value="Sign In"/>
+            </form>
+        </div>
+    </div>
+    <hr>
+</header>
+
 <body>
 
 <form th:action="@{/login}" method="post">

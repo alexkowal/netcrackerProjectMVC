@@ -6,27 +6,43 @@
 <head>
     <meta charset="UTF-8">
     <title>LK</title>
-
     <link type="text/css" rel="stylesheet" href="/css/style.css"/>
     <base href="/">
 </head>
 
 <header>
+    <div class="header">
+        <a th:href="@{/index}"> Главная</a>
+        <a th:href="@{/newadv}"> Подать объявление</a>
+        <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
 
-    <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
-    <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/index}"> Главная</a>
 
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <div class="header-greeting">
+            <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
+                [[${#httpServletRequest.remoteUser}]]!</p>
+        </div>
 
-    <form th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
+        <div class="header-right">
 
+            <form th:name="logout" th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}"
+                  method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+
+            <form th:name="login" th:if="${#httpServletRequest.remoteUser} == null" th:action="@{/login}" method="post">
+                <input type="submit" value="Sign In"/>
+            </form>
+        </div>
+    </div>
+    <hr>
 </header>
+
 
 
 <body>
 
+
+<a  th:if="${admin}==true" th:href="@{'/admin'}">Модерация</a></a>
 
 <p>Ваш логин: <a th:text="${login}"></a>
 </p>
@@ -40,7 +56,7 @@
 <tr th:each="advert : ${adverts}">
     <td>
         <a th:text="${advert.getTitle()}" th:href="@{'/showadv/' + ${advert.getAdvId()}}"/>
-<br>
+        <br>
     </td>
 
 
