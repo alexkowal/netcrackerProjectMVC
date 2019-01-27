@@ -9,30 +9,19 @@ public interface CharactRepo extends JpaRepository<Charact, Long> {
 
 
     Charact findCharactByCharactId(Long id);
-
     Charact findCharactByBrandId(Long id);
-
     Charact findCharactByModelId(Long id);
-
-    // Charact findCharactByBody();
-
     Charact findCharactByTransmission(String transmission);
-
     List<Charact> findAllByBrandIdIsNotNull();
-
     List<Charact> findAllByBrandId(Long id);
-
     List<Charact> findAllByBrandIdAndAndModelId(Long brandId, Long modelId);
-
     List<Charact> findAllByBody(String body);
     List<Charact> findAllByTransmission(String body);
     List<Charact> findAllByDriveUnit(String body);
-    List<Charact> findAllByPower(Integer power);
+    List<Charact> findAllByPowerBetween(Long min, Long max);
+    List<Charact> findAllByPowerGreaterThanEqual(Long min);
+    List<Charact> findAllByPowerLessThanEqual(Long max);
 
 
 
-    //List<Charact> findAllByBody();
-    //List<Charact> findAllByTransmission();
-    //List<Charact> findAllByDriveUnit();
-    //List<Charact> findAllByPower();
 }

@@ -83,7 +83,9 @@ public class AdvertController {
         mark.setUserId(adv.getOwnerId());
         if (markRepo.findByAdvIdAndUserId(id, adv.getOwnerId()) == null)
             markRepo.save(mark);
-        
+        else
+        markRepo.deleteById((markRepo.findByAdvIdAndUserId(id, adv.getOwnerId())).getMarkId());
+
         UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
         components.getQueryParams()
                 .entrySet()

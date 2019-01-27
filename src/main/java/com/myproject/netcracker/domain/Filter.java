@@ -4,18 +4,19 @@ public class Filter {
     Long brandId;
     Long modelId;
     Long charactId;
-    Integer minMileage;
+    Long minMileage;
 
 
 
-    Integer maxMileage;
+    Long maxMileage;
 
 
-    Integer minCost;
-    Integer maxCost;
+    Long minCost;
+    Long maxCost;
     String bodyType;
     String transmissionType;
     String driveUnite;
+
 
 
     public Long getBrandId() {
@@ -42,19 +43,19 @@ public class Filter {
         this.charactId = charactId;
     }
 
-    public Integer getMinCost() {
+    public Long getMinCost() {
         return minCost;
     }
 
-    public void setMinCost(Integer minCost) {
+    public void setMinCost(Long minCost) {
         this.minCost = minCost;
     }
 
-    public Integer getMaxCost() {
+    public Long getMaxCost() {
         return maxCost;
     }
 
-    public void setMaxCost(Integer maxCost) {
+    public void setMaxCost(Long maxCost) {
         this.maxCost = maxCost;
     }
 
@@ -82,16 +83,8 @@ public class Filter {
         this.driveUnite = driveUnite;
     }
 
-    public Integer getPower() {
-        return power;
-    }
 
-    public void setPower(Integer power) {
-        this.power = power;
-    }
-
-
-    public Filter(Long brandId, Long modelId, Long charactId, Integer minMileage, Integer maxMileage, Integer minCost, Integer maxCost, String bodyType, String transmissionType, String driveUnite, Integer power) {
+    public Filter(Long brandId, Long modelId, Long charactId, Long minMileage, Long maxMileage, Long minCost, Long maxCost, String bodyType, String transmissionType, String driveUnite, Long minPower, Long maxPower) {
         this.brandId = brandId;
         this.modelId = modelId;
         this.charactId = charactId;
@@ -102,22 +95,23 @@ public class Filter {
         this.bodyType = bodyType;
         this.transmissionType = transmissionType;
         this.driveUnite = driveUnite;
-        this.power = power;
+        this.minPower = minPower;
+        this.maxPower = maxPower;
     }
 
-    public Integer getMinMileage() {
+    public Long getMinMileage() {
         return minMileage;
     }
 
-    public void setMinMileage(Integer minMileage) {
+    public void setMinMileage(Long minMileage) {
         this.minMileage = minMileage;
     }
 
-    public Integer getMaxMileage() {
+    public Long getMaxMileage() {
         return maxMileage;
     }
 
-    public void setMaxMileage(Integer maxMileage) {
+    public void setMaxMileage(Long maxMileage) {
         this.maxMileage = maxMileage;
     }
 
@@ -136,8 +130,27 @@ public class Filter {
         this.maxMileage = null;
         this.transmissionType = null;
         this.driveUnite = null;
-        this.power = null;
+        this.minPower = null;
+        this.maxPower = null;
     }
 
-    Integer power;
+    Long minPower;
+
+    public Long getMinPower() {
+        return minPower;
+    }
+
+    public void setMinPower(Long minPower) {
+        this.minPower = minPower;
+    }
+
+    public Long getMaxPower() {
+        return maxPower;
+    }
+
+    public void setMaxPower(Long maxPower) {
+        this.maxPower = maxPower;
+    }
+
+    Long maxPower;
 }

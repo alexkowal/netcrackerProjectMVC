@@ -46,12 +46,14 @@ public class PhotoController {
         return Files.readAllBytes(file.toPath());
         // return IOUtils.toByteArray(in);
     }
+
+
     @RequestMapping("/css/{filename}")
     public @ResponseBody
     byte[] getCss(@PathVariable String filename) throws IOException {
 
 
-        String path = "/Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/css/style.css";
+        String path = "/Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/css/" + filename;
         InputStream in = getClass()
                 .getResourceAsStream(path);
         File file = new File(path);
@@ -59,5 +61,15 @@ public class PhotoController {
         // return IOUtils.toByteArray(in);
     }
 
+    @RequestMapping("/js/{filename}")
+    public @ResponseBody
+    byte[] getJs(@PathVariable String filename) throws IOException {
+        String path = "/Users/aleksandr/IdeaProjects/netcrackerProjectMVC/src/main/resources/js/select.js";
+        InputStream in = getClass()
+                .getResourceAsStream(path);
+        File file = new File(path);
+        return Files.readAllBytes(file.toPath());
+        // return IOUtils.toByteArray(in);
+    }
 
 }

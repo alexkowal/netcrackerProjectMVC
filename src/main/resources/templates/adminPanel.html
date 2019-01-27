@@ -44,7 +44,7 @@
 </form>
 
 
-<form name="userBan" th:action="@{/admin/advban}" th:object="${advert}" method="post">
+<form name="advBan" th:action="@{/admin/advban}" th:object="${advert}" method="post">
     <input type="text" th:field="*{advId}"/>
     <input type="submit" value="Ok"/>
 </form>

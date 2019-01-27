@@ -43,6 +43,8 @@ public class AdminController {
     @GetMapping("/admin")
     public String administration(Model model) {
         User user = new User();
+
+
         model.addAttribute("user", user);
         model.addAttribute("advert", new Advert());
         return "adminPanel";

@@ -36,30 +36,32 @@
 </header>
 
 
-
+<div class="mid">
 <body>
+<br><br>
 <a th:if="${advert.getBrandId()} == null">
     <form name='f' th:action="@{/newadv}" th:object="${advert}" method='POST'>
         <table>
 
             <tr>
-                <td>Название объявления <input type="text" th:field="*{title}"/></td>
+                <td>Название объявления <br><input type="text" th:field="*{title}"/></td>
             </tr>
 
             <tr>
-                <td>Описание <input type="text" th:field="*{description}"/></td>
+                <td>Описание <br> <input type="text" th:field="*{description}"/></td>
             </tr>
-
+            <br>
             <tr>
                 <td>Select brand:
-
-                    <select th:field="*{brandId}" onselect="this.form.submit()">
-                        <option value=""> --</option>
-                        <option th:each="brand : ${brands}"
-                                th:value="${brand.brandId}"
-                                th:utext="${brand.name}">
-                        </option>
-                    </select>
+                    <div class="styled-select green semi-square">
+                        <select  th:field="*{brandId}" onselect="this.form.submit()">
+                            <option value=""> --</option>
+                            <option th:each="brand : ${brands}"
+                                    th:value="${brand.brandId}"
+                                    th:utext="${brand.name}">
+                            </option>
+                        </select>
+                    </div>
                 </td>
             </tr>
 
@@ -165,4 +167,5 @@
 
 
 </body>
+</div>
 </html>

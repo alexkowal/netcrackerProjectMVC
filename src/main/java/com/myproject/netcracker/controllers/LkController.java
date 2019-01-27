@@ -1,6 +1,7 @@
 package com.myproject.netcracker.controllers;
 
 import com.myproject.netcracker.domain.Advert;
+import com.myproject.netcracker.domain.Mark;
 import com.myproject.netcracker.domain.Picture;
 import com.myproject.netcracker.domain.User;
 import com.myproject.netcracker.repos.AdvertRepo;
@@ -53,11 +54,18 @@ public class LkController {
         else
             model.put("admin", false);
 
-        model.put("marks",markRepo.findAllByUserId(user.getIdUser()));
+        model.put("marks", markRepo.findAllByUserId(user.getIdUser()));
+
+
+        List<Picture> markPict = new ArrayList<>();
+        for (Mark mark : markRepo.findAllByUserId(user.getIdUser())) {
+            markPict.addAll(pictureRepo.findByAdvertId(mark.getAdvId()));
+        }
+        model.put("markPict", markPict);
 
 
         model.put("username", user.getUserName());
-        model.put("advertRepo",advertRepo);
+        model.put("advertRepo", advertRepo);
         model.put("login", user.getLogin());
         model.put("email", user.getEmail());
         model.put("pictures", pictures);

@@ -8,8 +8,6 @@ import com.myproject.netcracker.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +54,22 @@ public class IndexController {
         adverts.addAll(advertRepo.findAllByAddDateIsNotNull());
         Set<Advert> removeList = new HashSet<>();
 
+
+       /* if(myfilter.getMinCost()==null)
+            myfilter.setMinCost(0l);
+        if(myfilter.getMaxCost()==null)
+            myfilter.setMaxCost(Long.MAX_VALUE);
+
+        if(myfilter.getMinMileage()==null)
+            myfilter.setMinMileage(0l);
+        if(myfilter.getMaxMileage()==null)
+            myfilter.setMinCost(Long.MAX_VALUE);
+
+        if(myfilter.getMinPower()==null)
+            myfilter.setMinPower(0l);
+        if(myfilter.getMaxPower()==null)
+            myfilter.setMaxPower(Long.MAX_VALUE);
+*/
         for (Advert advert : adverts) {
             if (!advert.getIsactive())
                 removeList.add(advert);
@@ -74,13 +88,19 @@ public class IndexController {
 
             if (advert.getCharactId() != null && myfilter.getCharactId() != null)
                 if (advert.getCharactId() != myfilter.getCharactId())
-                    // adverts.remove(advert);
                     removeList.add(advert);
 
 
             if (advert.getMileage() != null && myfilter.getMinMileage() != null && myfilter.getMaxMileage() != null)
                 if (advert.getMileage() <= myfilter.getMinMileage() || advert.getMileage() >= myfilter.getMaxMileage())
-                    // adverts.remove(advert);
+                    removeList.add(advert);
+
+            if (advert.getMileage() != null && myfilter.getMinMileage() != null && myfilter.getMaxMileage() == null)
+                if (advert.getMileage() <= myfilter.getMinMileage() )
+                    removeList.add(advert);
+
+            if (advert.getMileage()!= null && myfilter.getMinMileage() == null && myfilter.getMaxMileage() != null)
+                if (advert.getMileage() >= myfilter.getMaxMileage())
                     removeList.add(advert);
 
 
@@ -89,9 +109,22 @@ public class IndexController {
                     //  adverts.remove(advert);
                     removeList.add(advert);
 
+            if (advert.getCostVal()!= null && myfilter.getMinCost() == null && myfilter.getMaxCost() != null)
+                if (advert.getCostVal() >= myfilter.getMaxCost())
+                    removeList.add(advert);
+
+            if (advert.getCostVal()!= null && myfilter.getMinCost() != null && myfilter.getMaxCost() == null)
+                if (advert.getCostVal() <= myfilter.getMinCost())
+                    removeList.add(advert);
+
+
+
             Set<Charact> charactByTransmissionTypes = new HashSet<>();
             Set<Charact> charactByBodyTypes = new HashSet<>();
             Set<Charact> charactByDriveUnits = new HashSet<>();
+            Set<Charact> charactByPower = new HashSet<>();
+
+
 
             if (myfilter.getBodyType() != null && myfilter.getBodyType() != "") {
                 charactByBodyTypes.addAll(charactRepo.findAllByBody(myfilter.getBodyType()));
@@ -115,7 +148,31 @@ public class IndexController {
                     // adverts.remove(advert);
                     removeList.add(advert);
             }
+
+
+
+
+            if (myfilter.getMinPower() != null && myfilter.getMaxPower() != null) {
+                charactByPower.addAll(charactRepo.findAllByPowerBetween(myfilter.getMinPower(), myfilter.getMaxPower()));
+                if (!charactByPower.contains(charactRepo.findCharactByCharactId(advert.getCharactId())))
+                    removeList.add(advert);
+            }
+
+            if (myfilter.getMinPower() == null && myfilter.getMaxPower() != null) {
+                charactByPower.addAll(charactRepo.findAllByPowerLessThanEqual(myfilter.getMaxPower()));
+                if (!charactByPower.contains(charactRepo.findCharactByCharactId(advert.getCharactId())))
+                    removeList.add(advert);
+            }
+
+            if (myfilter.getMinPower() != null && myfilter.getMaxPower() == null) {
+                charactByPower.addAll(charactRepo.findAllByPowerGreaterThanEqual(myfilter.getMinPower()));
+                if (!charactByPower.contains(charactRepo.findCharactByCharactId(advert.getCharactId())))
+                    removeList.add(advert);
+            }
+
         }
+
+
 
         for (Advert rem : removeList)
             adverts.remove(rem);

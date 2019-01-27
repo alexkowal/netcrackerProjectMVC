@@ -9,9 +9,9 @@
     <meta charset="UTF-8">
     <title>Подробнее</title>
     <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/advert.css"/>
     <base href="/">
 </head>
-
 
 
 <header>
@@ -42,34 +42,68 @@
 </header>
 
 
+<body>
+
+<br>
+<br>
+
+
+<div class="advert-head"><b>
+    <span><a th:text="${brand.getName()}"/> | </span>
+    <span><a th:text="${model.getName()}"/></span>
+</b>
+    <br>
+
+    <span> Опубликовано <a th:text="${advert.getAddDate()}"/></span>
+    <span>id: <a th:text="${advert.getAdvId()}"/></span>
+    <br>
+    <span><a th:text="${user.getUserName()}"/>, </span>
+    <span><a th:text="${user.getEmail()}"/></span>
+    <br>
+    <br>
+    <br>
+    <hr style="width: 100%; margin-left: 0px">
+</div>
+
+<br>
+<br>
 
 <table>
-    <tr
-            th:each="pict: ${pictures}"
+      <span th:each="pict: ${pictures}"
             th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
-        <img th:src="@{'/img/' + ${pict.getPath()}}" th:width="120" th:height="100" hspace="10"
-             vspace="10"/>
+                           <div class="picture_container"> <img style="float: right"
+                                                                th:src="@{'/img/' + ${pict.getPath()}}" th:width="250"
+                                                                th:height="200"/>    </div>
+            </span>
 
-    </tr>
 </table>
 
-<p> Год выпуска  <a  th:text="${advert.getFactYear()}"/></p>
-<p> Пробег <a th:text="${advert.getMileage()}"/> км</p>
-<p> Марка <a th:text="${brand.getName()}"/></p>
-<p> Модель <a th:text="${model.getName()}"/></p>
-<p> Тип кузова <a th:text="${charact.getBody()}"/></p>
-<p> Коробка <a th:text="${charact.getTransmission()}"/></p>
-<p> Привод <a th:text="${charact.getDriveUnit()}"/></p>
-<p> Мощность <a th:text="${charact.getPower()}"/> л.с.</p>
-<p> Описание <br> <a th:text="${advert.getDescription()}"/></p>
-<br>
-<p> Владелец <a th:text="${user.getUserName()}"/></p>
-<p> Почта <a th:text="${user.getEmail()}"/></p>
-<p> Мощность <a th:text="${charact.getPower()}"/> л.с. </p>
+<div class="info">
+    <span style="color:gray"> Год выпуска</span>
+    <span style="margin-right: 10%"> <a th:text="${advert.getFactYear()}"/></span>
+    <br>
+    <span style="color:gray"> Тип кузова</span>
+    <span style="margin-right: 10%"><a th:text="${charact.getBody()}"/></span>
+    <br>
+    <span style="color:gray"> Коробка</span>
+    <span style="margin-right: 10%"><a th:text="${charact.getTransmission()}"/></span>
+    <br>
+    <span style="color:gray"> Привод</span>
+    <span style="margin-right: 10%"> <a th:text="${charact.getDriveUnit()}"/></span>
+    <br>
+    <span style="color:gray"> Мощность</span>
+    <span style="margin-right: 10%"> <a th:text="${charact.getPower()}"/> л.с.</span>
+    <br>
+    <span style="color:gray"> Пробег</span>
+    <span style="margin-right: 10%"> <a th:text="${advert.getMileage()}"/> км </span>
+    <br>
 
-<p> Дата публикации <a th:text="${advert.getAddDate()}"/></p>
+    <span style="color:gray"> Описание:</span>
+    <br>
+    <span><a th:text="${advert.getDescription()}"/></span>
+    <br>
 
-
+</div>
 
 </body>
 </html>

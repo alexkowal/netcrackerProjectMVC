@@ -8,7 +8,11 @@
 <head>
     <meta charset="UTF-8">
     <title>А ты продай авто</title>
-    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <!--<script type='text/javascript' src="/js/select.js"></script>
+    -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <base href="/">
 </head>
 
@@ -41,146 +45,194 @@
 </header>
 
 <body>
+<br>
+<br>
 <form name='filter' th:action="@{/index}" th:object="${filter}" method='POST'>
 
-    <table>
 
-        <a th:if="${filter.getBrandId()} == null">
-            <tr>
-                <td>Марка:
+    <div class="mid">
 
-                    <select th:field="*{brandId}" onselect="this.form.submit()">
-                        <option value=""> --</option>
-                        <option th:each="brand : ${brands.findAllByBrandIdIsNotNull()}"
-                                th:value="${brand.brandId}"
-                                th:utext="${brand.name}">
-                        </option>
-                    </select>
+        <table>
+            <a th:if="${filter.getBrandId()} == null">
+
+                <tr>
+                    <td>
+
+                        <div class="styled-select green semi-square">
+                            <select th:field="*{brandId}" onselect="this.form.submit()">
+
+                                <option value=""> Марка</option>
+                                <option th:each="brand : ${brands.findAllByBrandIdIsNotNull()}"
+                                        th:value="${brand.brandId}"
+                                        th:utext="${brand.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+
+            </a>
+
+
+            <a th:if="${filter.getBrandId()} != null and ${filter.getModelId()}==null">
+
+
+                <td>
+                    <div class="styled-select green semi-square">
+                        <select th:field="*{modelId}" onselect="this.form.submit()">
+                            <option value=""> Модель</option>
+                            <option th:each="model : ${model}"
+                                    th:value="${model.modelId}"
+                                    th:utext="${model.name}">
+                            </option>
+                        </select>
+                    </div>
                 </td>
-            </tr>
-        </a>
 
-        <a th:if="${filter.getBrandId()} != null and ${filter.getModelId()}==null">
+            </a>
 
-            <tr>
-                <td>Модель:
+            <a th:if="${filter.getModelId()} != null">
 
-                    <select th:field="*{modelId}" onselect="this.form.submit()">
-                        <option value=""> --</option>
-                        <option th:each="model : ${model}"
-                                th:value="${model.modelId}"
-                                th:utext="${model.name}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-        </a>
 
-        <a th:if="${filter.getModelId()} != null">
-
-            <tr>
-                <td>Комплектация:
-
-                    <select th:field="*{charactId}" onselect="this.form.submit()">
-                        <option value=""> --</option>
-                        <option th:each="charact : ${charact}"
-                                th:value="${charact.charactId}"
-                                th:utext="${charact.body} + ' ' +  ${charact.transmission} +
+                <td>
+                    <div class="styled-select green semi-square">
+                        <select th:field="*{charactId}" onselect="this.form.submit()">
+                            <option value=""> Комплектация:</option>
+                            <option th:each="charact : ${charact}"
+                                    th:value="${charact.charactId}"
+                                    th:utext="${charact.body} + ' ' +  ${charact.transmission} +
                                 ' ' + ${charact.driveUnit} + ' ' + ${charact.power}">
+                            </option>
+                        </select>
+                    </div>
+                </td>
+
+            </a>
+
+
+            <td>
+                <div class="styled-select green semi-square">
+                    <select th:field="*{transmissionType}" onselect="this.form.submit()">
+                        <option value=""> Тип КПП:</option>
+                        <option th:each="transmissionType : ${transmissionTypes}"
+                                th:value="${transmissionType}"
+                                th:utext="${transmissionType}"
+                                th:default=null>
                         </option>
                     </select>
+                </div>
+            </td>
+
+
+            <td>
+                <div class="styled-select green semi-square">
+                    <select th:field="*{driveUnite}" onselect="this.form.submit()">
+                        <option value=""> Тип привода:</option>
+                        <option th:each="driveUnite : ${driveUnits}"
+                                th:value="${driveUnite}"
+                                th:utext="${driveUnite}"
+                                th:default=null>
+                        </option>
+                    </select>
+                </div>
+            </td>
+            </tr>
+
+
+            <tr>
+                <td><input type="number" th:field="*{minMileage}" th:default="0" placeholder="Пробег от..."></td>
+                <td><input type="number" th:field="*{minCost}" placeholder="Стоимость от..."/></td>
+                <td><input type="number" th:field="*{minPower}" th:default="0" placeholder="Мощность от..."/></td>
+
                 </td>
             </tr>
-        </a>
 
-        <tr>
-            <td>Тип КПП:
+            <tr>
 
-                <select th:field="*{transmissionType}" onselect="this.form.submit()">
-                    <option value=""> --</option>
-                    <option th:each="transmissionType : ${transmissionTypes}"
-                            th:value="${transmissionType}"
-                            th:utext="${transmissionType}"
-                            th:default=null>
-                    </option>
-                </select>
-            </td>
+                <td><input type="number" th:field="*{maxMileage}" th:default="100000000" placeholder="Пробег до..."/>
+                </td>
+                <td><input type="number" th:field="*{maxCost}" placeholder="Стоимость до..."/></td>
+                <td><input type="number" th:field="*{maxPower}" th:default="100000000" placeholder="Мощность до..."/>
+            </tr>
 
-            <td>Тип привода:
-
-                <select th:field="*{driveUnite}" onselect="this.form.submit()">
-                    <option value=""> --:</option>
-                    <option th:each="driveUnite : ${driveUnits}"
-                            th:value="${driveUnite}"
-                            th:utext="${driveUnite}"
-                            th:default=null>
-                    </option>
-                </select>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Apply"/>
+                </td>
 
 
-        <tr>
-            <td>Пробег от:<input type="number" th:field="*{minMileage}" th:default="0"/></td>
-            <td>до:<input type="number" th:field="*{maxMileage}" th:default="100000000"/></td>
+                <td>
 
-        </tr>
+                    <a th:href="@{/resetfilter}" class="knopka">Reset</a>
 
-        <tr>
-            <td>Стоимость от:<input type="number" th:field="*{minCost}" th:default="0"/></td>
-            <td>до:<input type="number" th:field="*{maxCost}" th:default="100000000"/></td>
-        </tr>
-        <tr>
-            <td>Мощность от:<input type="number" th:field="*{minCost}" th:default="0"/></td>
-            <td>до:<input type="number" th:field="*{maxCost}" th:default="100000000"/></td>
-        </tr>
+                </td>
 
+            </tr>
 
-        <tr>
-            <td>
-                <input type="submit" value="Apply"/>
-                <a th:href="@{/resetfilter}">Reset</a>
+        </table>
+    </div>
 
-            </td>
-        </tr>
-
-    </table>
-
+    <br>
     <br>
 
     <tr th:each="advert : ${adverts}">
 
 
-        <p>Марка <a th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/></p>
-        <p> Модель <a th:text="${modelRepo.findByModelId(advert.getModelId()).getName()}"/></p>
-        <p>Пробег <a th:text="${advert.getMileage()}"/> км</p>
-        <p> Тип кузова <a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getBody()}"/></p>
-        <p> Привод <a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getDriveUnit()}"/></p>
-        <p> Мощность <a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getPower()}"/> л.с.</p>
-        <p> Стоимость <a th:text="${advert.getCostVal()}"/> р </p>
+        <hr>
+
+        <div class="advheader">
+
+
+            <b><span><a th:text="${brands.findByBrandId(advert.getBrandId()).getName()}"/> |
+                <a th:text="${modelRepo.findByModelId(advert.getModelId()).getName()}"/></span>
+                <span style='padding-left:20%;'><a th:text="${advert.getCostVal()}"/> р </span></b>
+            <span style='padding-left:10%;'> <a th:text="${advert.getMileage()}"/> км</span>
+
+            <div class="like">
+                <a th:if="${#httpServletRequest.remoteUser} != null and ${markRepo.findByAdvIdAndUserId(advert.getAdvId(),userId)} ==null"
+                   th:href="@{'/like/' + ${advert.getAdvId()}}"><img th:src="@{/css/like_border.png}"></img></a>
+            </div>
+            <div class="like">
+                <a th:if="${#httpServletRequest.remoteUser} != null and ${markRepo.findByAdvIdAndUserId(advert.getAdvId(),userId)} !=null"
+                   th:href="@{'/like/' + ${advert.getAdvId()}}">
+                    <img th:src="@{/css/like.png}"></img>
+                </a>
+            </div>
+
+            <br>
+        </div>
+        <div class="advchar">
+            <!--Дальше серым кузов мощность и привод-->
+            <span><a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getPower()}"/> л.с. / </span>
+            <span><a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getBody()}"/> / </span>
+            <span><a th:text="${charactRepo.findCharactByCharactId(advert.getCharactId()).getDriveUnit()}"/></span>
+        </div>
 
         <td>
             <table>
                 <tr
                         th:each="pict: ${pictures}"
                         th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
-                    <img th:src="@{'/img/' + ${pict.getPath()}}" th:width="120" th:height="100" hspace="10"
-                         vspace="10"/>
+                    <div class="image">
+                        <img th:src="@{'/img/' + ${pict.getPath()}}" th:width="150" th:height="120"/></div>
                 </tr>
             </table>
-
             <br>
-            <a th:href="@{'/showadv/' + ${advert.getAdvId()}}">Подробнее</a>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
 
-            <a th:if="${#httpServletRequest.remoteUser} != null and ${markRepo.findByAdvIdAndUserId(advert.getAdvId(),userId)} ==null"
-               th:href="@{'/like/' + ${advert.getAdvId()}}">like</a>
-
-            <a th:if="${admin}==true" th:href="@{'/advban/' + ${advert.getAdvId()}}">Забанить объявление</a></a>
+            <a class="button" th:if="${admin}==true" th:href="@{'/advban/' + ${advert.getAdvId()}}">Забанить
+                объявление</a></a>
+            <a class="button"  th:href="@{'/showadv/' + ${advert.getAdvId()}}">Подробнее</a></a>
+            
+            <br>
             <br>
             <br>
         </td>
-
-
     </tr>
 
 

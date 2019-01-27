@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>LK</title>
     <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/lk.css"/>
     <base href="/">
 </head>
 
@@ -38,43 +39,59 @@
 </header>
 
 
-
 <body>
+<br>
+<br>
 
 
-<a  th:if="${admin}==true" th:href="@{'/admin'}">Модерация</a></a>
+<a style="margin-left: 5.3%;" class="knopka" th:if="${admin}==true" th:href="@{'/admin'}">Модерация</a></a>
+<div class="text">
+    <p>Ваш логин: <a th:text="${login}"></a>
+    </p>
+    <p>Ваше имя: <a th:text="${username}"> Имя</a></p>
+    <p>Ваш email: <a th:text="${email}"> Почта</a></p>
+    <p></p>
 
-<p>Ваш логин: <a th:text="${login}"></a>
-</p>
-<p>Ваше имя: <a th:text="${username}"> Имя</a></p>
-<p>Ваш email: <a th:text="${email}"> Почта</a></p>
-<p></p>
 
+    <H1> Ваши объявления</H1>
 
-<H1> Ваши объявления</H1>
-
-<tr th:each="advert : ${adverts}">
-    <td>
-        <a th:text="${advert.getTitle()}" th:href="@{'/showadv/' + ${advert.getAdvId()}}"/>
+    <tr th:each="advert : ${adverts}">
+        <td>
+            <br>
+            <span th:text="${advert.getTitle()}"></span>
+        </td>
         <br>
-    </td>
 
+        <table>
+            <tr
+                    th:each="pict: ${pictures}"
+                    th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
+                <div class="photo"><img th:src="@{'/img/' + ${pict.getPath()}}" th:width="150" th:height="120"/></div>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a class="button" style="margin-left: 0px;" th:href="@{'/showadv/' + ${advert.getAdvId()}}">Подробнее</a></a>
 
-    <table>
-        <tr
-                th:each="pict: ${pictures}"
-                th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
-            <img th:src="@{'/img/' + ${pict.getPath()}}" th:width="120" th:height="100" hspace="10"
-                 vspace="10"/>
-        </tr>
-    </table>
+        <br>
+        <hr style="margin-left: 5px;width: 80%">
+        <br>
+    </tr>
 
-
-</tr>
-<H1>Избранное</H1>
-<tr th:each="mark : ${marks}">
-    <a th:href="@{'/showadv/' + ${advertRepo.findByAdvId(mark.getAdvId()).getAdvId()}}"
-       th:text="${advertRepo.findByAdvId(mark.getAdvId()).getTitle()}"></a><br>
-</tr>
+    <H1>Избранное</H1>
+    <tr th:each="mark : ${marks}">
+        <a th:text="${advertRepo.findByAdvId(mark.getAdvId()).getTitle()}"/>
+        <br>
+        <a th:each="pict: ${markPict}"
+           th:if="${pict.getAdvertId()}!=null and ${mark.getAdvId()} == ${pict.getAdvertId()}">
+        <div class="photo"><img th:src="@{'/img/' + ${pict.getPath()}}" th:width="150" th:height="120"/></div></a>
+<br><Br>
+<br><br>
+        <a class="button" style="margin-left: 0px;" th:href="@{'/showadv/' + ${mark.getAdvId()}}">Подробнее</a>
+        <br><br>
+    </tr>
+</div>
 </body>
 </html>
