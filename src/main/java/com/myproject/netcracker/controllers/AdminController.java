@@ -1,11 +1,9 @@
 package com.myproject.netcracker.controllers;
 
 import com.myproject.netcracker.domain.Advert;
+import com.myproject.netcracker.domain.Picture;
 import com.myproject.netcracker.domain.User;
-import com.myproject.netcracker.repos.AdvertRepo;
-import com.myproject.netcracker.repos.BrandRepo;
-import com.myproject.netcracker.repos.ModelRepo;
-import com.myproject.netcracker.repos.UserRepo;
+import com.myproject.netcracker.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,6 +39,9 @@ public class AdminController {
     @Autowired
     EntityManager entityManager;
 
+    @Autowired
+    PictureRepo pictureRepo;
+
     @GetMapping("/admin")
     public String administration(Model model) {
         User user = new User();
@@ -47,6 +49,14 @@ public class AdminController {
 
         model.addAttribute("user", user);
         model.addAttribute("advert", new Advert());
+        model.addAttribute("bannedAdverts",advertRepo.findAllByIsactiveFalse());
+
+        List<Picture> pictures = new ArrayList<>();
+        for (Advert advert : advertRepo.findAllByIsactiveFalse()) {
+            pictures.addAll(pictureRepo.findByAdvertId(advert.getAdvId()));
+        }
+
+
         return "adminPanel";
     }
 

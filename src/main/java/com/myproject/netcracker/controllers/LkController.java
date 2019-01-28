@@ -38,6 +38,8 @@ public class LkController {
         User user = userRepo.findByLogin(currentPrincipalName);
         List<Advert> usersAdv = advertRepo.findAllByOwnerId(user.getIdUser());
 
+
+
         List<Picture> pictures = new ArrayList<>();
         for (Advert advert : usersAdv) {
             pictures.addAll(pictureRepo.findByAdvertId(advert.getAdvId()));

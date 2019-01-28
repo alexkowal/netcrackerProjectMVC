@@ -25,6 +25,8 @@ public interface AdvertRepo extends JpaRepository<Advert, Long> {
 
     List<Advert> findAllByFactYear(Long year);
 
+    List<Advert>findAllByIsactiveFalse();
+
     List<Advert> findAdvertsByCharactId(Integer id);
 
 

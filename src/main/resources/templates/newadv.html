@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Подать объявление</title>
     <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/newadv.css"/>
     <base href="/">
 </head>
 
@@ -13,7 +14,7 @@
         <a th:href="@{/index}"> Главная</a>
         <a th:href="@{/newadv}"> Подать объявление</a>
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
-
+        <a th:if="${#httpServletRequest.remoteUser} == null" th:href="@{/register}"> Регистрация</a>
 
         <div class="header-greeting">
             <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
@@ -36,136 +37,160 @@
 </header>
 
 
-<div class="mid">
-<body>
-<br><br>
-<a th:if="${advert.getBrandId()} == null">
-    <form name='f' th:action="@{/newadv}" th:object="${advert}" method='POST'>
-        <table>
+<div class="newadvert">
+    <body>
+    <br><br>
+    <a th:if="${advert.getBrandId()} == null">
 
-            <tr>
-                <td>Название объявления <br><input type="text" th:field="*{title}"/></td>
-            </tr>
 
-            <tr>
-                <td>Описание <br> <input type="text" th:field="*{description}"/></td>
-            </tr>
-            <br>
-            <tr>
-                <td>Select brand:
-                    <div class="styled-select green semi-square">
-                        <select  th:field="*{brandId}" onselect="this.form.submit()">
-                            <option value=""> --</option>
-                            <option th:each="brand : ${brands}"
-                                    th:value="${brand.brandId}"
-                                    th:utext="${brand.name}">
-                            </option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-
-        </table>
-        <input type="submit" value="Apply"/>
-    </form>
-</a>
-
-<a th:if="${advert.getBrandId()} !=null">
-    <a th:if="${advert.getModelId()} ==null">
-        <form name='selected brand' th:action="@{'/newadv/'+ brandParam}" th:object="${advert}" method='POST'>
+        <form th:action="@{/newadv}" th:object="${advert}" method='POST'>
             <table>
+
                 <tr>
-                    <a> Название объявления:
-                        <div th:text="${advert.getTitle()}"/>
-                    </a>
+                    <td>Название объявления <br>
+                        <input style="width: 200px;height: 30px" type="text"
+                               th:field="*{title}"/></td>
+                    <span
+                            th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
                 </tr>
 
                 <tr>
-                    <a> Описание:
-                        <div th:text="${advert.getDescription()}"/>
-                    </a>
+                    <td>Описание <br> <input style="width: 400px; height: 30px" type="text" th:field="*{description}"/>
+                    </td>
+
                 </tr>
-
-
+                <br>
                 <tr>
-                    <a> Brand
-                        <div th:text="${advert.getBrandId()}"/>
-                    </a>
-                </tr>
-
-                <tr>
-                    <td>Select model:
-                        <select th:field="*{modelId}">
-                            <option value=""> --</option>
-                            <option th:each="model : ${models}"
-                                    th:value="${model.modelId}"
-                                    th:utext="${model.name}"></option>
-                        </select>
+                    <td>Выберите марку:
+                        <div class="newstyled-select green semi-square">
+                            <select th:field="*{brandId}" onselect="this.form.submit()">
+                                <option value=""> --</option>
+                                <option th:each="brand : ${brands}"
+                                        th:value="${brand.brandId}"
+                                        th:utext="${brand.name}">
+                                </option>
+                            </select>
+                        </div>
                     </td>
                 </tr>
+
             </table>
+
             <input type="submit" value="Apply"/>
+            <a th:href="@{/resetadv}" class="knopka">Reset</a>
         </form>
     </a>
-</a>
 
 
-<a th:if="${advert.getModelId()} !=null">
-    <form name='charact' th:action="@{'/newadv/'+ brandParam + '/' + modelParam}" th:object="${advert}" method='POST'>
-        <table>
-            <tr>
-                <a> Название объявления:
-                    <div th:text="${advert.getTitle()}"/>
-                </a>
-            </tr>
+    <a th:if="${advert.getBrandId()} !=null">
+        <a th:if="${advert.getModelId()} ==null">
+            <form class="newadv" name='selected brand' th:action="@{'/newadv/'+ brandParam}" th:object="${advert}"
+                  method='POST'>
+                <table>
+                    <tr>
+                    <span> Название объявления:
+                        <span th:text="${advert.getTitle()}"/>
+                    </span>
+                    </tr>
+                    <br>
+                    <tr>
+                    <span> Описание:
+                        <span th:text="${advert.getDescription()}"/>
+                    </span>
+                    </tr>
 
-            <tr>
-                <a> Описание:
-                    <div th:text="${advert.getDescription()}"/>
-                </a>
-            </tr>
+                    <br>
+                    <tr>
+                    <span> Марка:
+                        <span th:text="${brandRepo.findByBrandId({advert.getBrandId()}).getName()}"/>
+                    </span>
+                    </tr>
+
+                    <tr>
+                        <td>Выберите модель:
+                            <br>
+                            <div class="newstyled-select green semi-square">
+                                <select th:field="*{modelId}">
+                                    <option value=""> --</option>
+                                    <option th:each="model : ${models}"
+                                            th:value="${model.modelId}"
+                                            th:utext="${model.name}"></option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" value="Apply"/>
+                <a th:href="@{/resetadv}" class="knopka">Reset</a>
+            </form>
+        </a>
+    </a>
 
 
-            <tr>
-                <a> Выбранная марка
-                    <div th:text="${advert.getBrandId()}"/>
-                </a>
-            </tr>
+    <a th:if="${advert.getModelId()} !=null">
+        <form class="newadv" name='charact' th:action="@{'/newadv/'+ brandParam + '/' + modelParam}"
+              th:object="${advert}"
+              method='POST'>
+            <table>
+                <tr>
+                    <span> Название объявления:
+                        <span th:text="${advert.getTitle()}"/>
 
-            <tr>
-                <a> Выбранная модель
-                    <div th:text="${advert.getModelId()}"/>
-                </a>
-            </tr>
+                    </span>
+                </tr>
+                <br>
+                <tr>
+                    <span> Описание:
+                        <spand th:text="${advert.getDescription()}"/>
+                    </span>
+                </tr>
+                <br>
 
-            <tr>
-                <td>Выберите комплетацию автомобиля:
-                    <select th:field="*{charactId}">
-                        <option value=""> --</option>
-                        <option th:each="charact : ${charact}"
-                                th:value="${charact.charactId}"
-                                th:utext="${charact.body} + ' ' +  ${charact.transmission} +
+                <tr>
+                    <a> Выбранная марка:
+                        <span th:text="${brandRepo.findByBrandId({advert.getBrandId()}).getName()}"/>
+                    </a>
+                </tr>
+                <br>
+                <tr>
+                    <span> Выбранная модель:
+                        <span th:text="${modelRepo.findByModelId({advert.getModelId()}).getName()}"/>
+                    </span>
+                </tr>
+                <tr>
+                    <td>Выберите комплетацию автомобиля:
+                        <div class="newstyled-select green semi-square">
+                            <select th:field="*{charactId}">
+                                <option value=""> --</option>
+                                <option th:each="charact : ${charact}"
+                                        th:value="${charact.charactId}"
+                                        th:utext="${charact.body} + ' ' +  ${charact.transmission} +
                                 ' ' + ${charact.driveUnit} + ' ' + ${charact.power}"></option>
-                    </select>
-                </td>
-            </tr>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
 
-            <tr>
-                <td>Пробег:<input type="number" th:field="${advert.mileage}"/></td>
-            </tr>
-            <tr>
-                <td>Год выпуска:<input type="number" th:field="${advert.factYear}"/></td>
-            </tr>
-            <tr>
-                <td>Цена:<input type="number" th:field="${advert.costVal}"/></td>
-            </tr>
+                <tr>
+                    <td>Пробег: <br> <input type="number" th:field="${advert.mileage}"/></td>
+                </tr>
 
-        </table>
-        <input type="submit" value="Apply"/>
-    </form>
-</a>
+                <tr>
+                    <td>Год выпуска:<br><input type="number" th:field="${advert.factYear}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Цена:<br><input type="number" th:field="${advert.costVal}"/></td>
+                </tr>
+
+            </table>
+            <input type="submit" value="Apply"/>
+            <a th:href="@{/resetadv}" class="knopka">Reset</a>
+        </form>
+    </a>
 
 
-</body>
+    </body>
 </div>
 </html>

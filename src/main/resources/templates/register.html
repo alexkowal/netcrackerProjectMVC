@@ -14,7 +14,7 @@
         <a th:href="@{/index}"> Главная</a>
         <a th:href="@{/newadv}"> Подать объявление</a>
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
-
+        <a th:if="${#httpServletRequest.remoteUser} == null" th:href="@{/register}"> Регистрация</a>
 
         <div class="header-greeting">
             <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
@@ -44,7 +44,7 @@
     <table>
         <tr>
             <td>Login<input type="text" th:field="*{login}"/></td>
-            <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login must be between 8 and 25 char</td>
+            <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}"/>
         </tr>
 
         <tr>

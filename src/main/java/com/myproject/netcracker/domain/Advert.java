@@ -2,12 +2,17 @@ package com.myproject.netcracker.domain;
 
 
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "ad_advert")
-public class Advert {
+public class Advert implements Comparable<Advert> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,37 +20,53 @@ public class Advert {
     private Long advId;
     @Column(name = "id_owner")
     private Long ownerId;
+
     @Column(name = "title")
+    @Size(min = 8, max = 64)
+    @NotEmpty(message = "You must enter a name for the recommendet")
     private String title;
 
 
     @Column(name = "description")
+    @Size(min = 8, max = 256)
     private String description;
+
     @Column(name = "add_date")
     private LocalDate addDate;
 
     @Column(name = "id_brand")
+    @NotNull
     private Long brandId;
 
     @Column(name = "id_model")
+    @NotNull
     private Long modelId;
 
     @Column(name = "id_charact")
+    @NotNull
     private Long charactId;
 
     @Column(name = "mileage")
+    @NotNull
     private Integer mileage;
 
+
     @Column(name = "cost_val")
+    @NotNull
     private Integer costVal;
 
 
 
     @Column(name = "fact_year")
+    @NotNull
     private Integer factYear;
 
     @Column(name = "isactive")
     private Boolean isactive;
+
+    public Advert() {
+
+    }
 
     public Long getAdvId() {
         return advId;
@@ -166,6 +187,34 @@ public class Advert {
         return factYear.equals(advert.factYear);
     }
 
+    public Advert(Long ownerId, String title, String description, LocalDate addDate, Long brandId, Long modelId, Long charactId, Integer mileage, Integer costVal, Integer factYear, Boolean isactive) {
+        this.ownerId = ownerId;
+        this.title = title;
+        this.description = description;
+        this.addDate = addDate;
+        this.brandId = brandId;
+        this.modelId = modelId;
+        this.charactId = charactId;
+        this.mileage = mileage;
+        this.costVal = costVal;
+        this.factYear = factYear;
+        this.isactive = isactive;
+    }
+
+    public void remove(){
+        this.ownerId = null;
+        this.title = null;
+        this.description = null;
+        this.addDate = null;
+        this.brandId = null;
+        this.modelId = null;
+        this.charactId = null;
+        this.mileage = null;
+        this.costVal = null;
+        this.factYear = null;
+        this.isactive = null;
+    }
+
     @Override
     public int hashCode() {
         int result = advId.hashCode();
@@ -181,5 +230,10 @@ public class Advert {
         result = 31 * result + costVal.hashCode();
         result = 31 * result + factYear.hashCode();
         return result;
+    }
+
+    @Override
+    public int compareTo(Advert o) {
+        return getAddDate().compareTo(o.getAddDate());
     }
 }

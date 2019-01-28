@@ -15,7 +15,7 @@
         <a th:href="@{/index}"> Главная</a>
         <a th:href="@{/newadv}"> Подать объявление</a>
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
-
+        <a th:if="${#httpServletRequest.remoteUser} == null" th:href="@{/register}"> Регистрация</a>
 
         <div class="header-greeting">
             <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
@@ -38,15 +38,48 @@
 </header>
 
 <body>
-<form name="userBan" th:action="@{/admin/userban}" th:object="${user}" method="post">
-    <input type="text" th:field="*{login}" />
+
+<form style="margin-left: 40%; margin-top: 10%" name="userBan" th:action="@{/admin/userban}" th:object="${user}"
+      method="post">
+    <span class="advheader" style="margin-left: 0px">Введите id пользователя, чтобы забанить его</span><br>
+
+    <input type="text" th:field="*{login}"/>
     <input type="submit" value="Ok"/>
 </form>
 
 
-<form name="advBan" th:action="@{/admin/advban}" th:object="${advert}" method="post">
+<form style="margin-left: 40%;margin-top: 10%" class="middle" name="advBan" th:action="@{/admin/advban}"
+      th:object="${advert}" method="post">
+    <span class="advheader" style="margin-left: 0px">Введите id объявления, чтобы забанить его</span><br>
     <input type="text" th:field="*{advId}"/>
     <input type="submit" value="Ok"/>
+</form>
+
+
+<form class="advheader" name="bannedAdv" th:action="@{/advban/{id}}" method="post">
+    <tr th:each="advert : ${bannedAdverts}">
+        <td>
+
+            <br>
+            <span th:text="${advert.getTitle()}"></span>
+            <span th:text="${advert.getAdvId()}"></span>
+            <br><br>
+            <a class="button" th:href="@{'/advban/' + ${advert.getAdvId()}}">Разбанить
+                объявление</a></a>
+            <a class="button" th:href="@{'/showadv/' + ${advert.getAdvId()}}">Подробнее</a></a>
+
+        </td>
+
+        <br>
+
+        <table>
+            <tr
+                    th:each="pict: ${pictures}"
+                    th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
+                <div class="photo"><img th:src="@{'/img/' + ${pict.getPath()}}" th:width="150" th:height="120"/></div>
+            </tr>
+        </table>
+    </tr>
 </form>
 
 

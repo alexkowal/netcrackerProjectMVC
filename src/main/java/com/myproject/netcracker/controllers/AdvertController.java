@@ -79,12 +79,16 @@ public class AdvertController {
         Advert adv = advertRepo.findByAdvId(id);
         Mark mark = new Mark();
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser")
+         if (auth != null)
+                mark.setUserId(userRepo.findByLogin(auth.getName()).getIdUser());
         mark.setAdvId(id);
-        mark.setUserId(adv.getOwnerId());
-        if (markRepo.findByAdvIdAndUserId(id, adv.getOwnerId()) == null)
+
+        if (markRepo.findByAdvIdAndUserId(id, mark.getUserId()) == null)
             markRepo.save(mark);
         else
-        markRepo.deleteById((markRepo.findByAdvIdAndUserId(id, adv.getOwnerId())).getMarkId());
+            markRepo.deleteById((markRepo.findByAdvIdAndUserId(id, mark.getUserId())).getMarkId());
 
         UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
         components.getQueryParams()

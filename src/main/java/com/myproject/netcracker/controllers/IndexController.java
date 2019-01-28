@@ -51,25 +51,10 @@ public class IndexController {
     public String noFilter(@ModelAttribute("filter") Filter myfilter, Model model) {
         Set<Advert> adverts = new HashSet<>();
 
+
         adverts.addAll(advertRepo.findAllByAddDateIsNotNull());
         Set<Advert> removeList = new HashSet<>();
 
-
-       /* if(myfilter.getMinCost()==null)
-            myfilter.setMinCost(0l);
-        if(myfilter.getMaxCost()==null)
-            myfilter.setMaxCost(Long.MAX_VALUE);
-
-        if(myfilter.getMinMileage()==null)
-            myfilter.setMinMileage(0l);
-        if(myfilter.getMaxMileage()==null)
-            myfilter.setMinCost(Long.MAX_VALUE);
-
-        if(myfilter.getMinPower()==null)
-            myfilter.setMinPower(0l);
-        if(myfilter.getMaxPower()==null)
-            myfilter.setMaxPower(Long.MAX_VALUE);
-*/
         for (Advert advert : adverts) {
             if (!advert.getIsactive())
                 removeList.add(advert);
@@ -96,10 +81,10 @@ public class IndexController {
                     removeList.add(advert);
 
             if (advert.getMileage() != null && myfilter.getMinMileage() != null && myfilter.getMaxMileage() == null)
-                if (advert.getMileage() <= myfilter.getMinMileage() )
+                if (advert.getMileage() <= myfilter.getMinMileage())
                     removeList.add(advert);
 
-            if (advert.getMileage()!= null && myfilter.getMinMileage() == null && myfilter.getMaxMileage() != null)
+            if (advert.getMileage() != null && myfilter.getMinMileage() == null && myfilter.getMaxMileage() != null)
                 if (advert.getMileage() >= myfilter.getMaxMileage())
                     removeList.add(advert);
 
@@ -109,21 +94,19 @@ public class IndexController {
                     //  adverts.remove(advert);
                     removeList.add(advert);
 
-            if (advert.getCostVal()!= null && myfilter.getMinCost() == null && myfilter.getMaxCost() != null)
+            if (advert.getCostVal() != null && myfilter.getMinCost() == null && myfilter.getMaxCost() != null)
                 if (advert.getCostVal() >= myfilter.getMaxCost())
                     removeList.add(advert);
 
-            if (advert.getCostVal()!= null && myfilter.getMinCost() != null && myfilter.getMaxCost() == null)
+            if (advert.getCostVal() != null && myfilter.getMinCost() != null && myfilter.getMaxCost() == null)
                 if (advert.getCostVal() <= myfilter.getMinCost())
                     removeList.add(advert);
-
 
 
             Set<Charact> charactByTransmissionTypes = new HashSet<>();
             Set<Charact> charactByBodyTypes = new HashSet<>();
             Set<Charact> charactByDriveUnits = new HashSet<>();
             Set<Charact> charactByPower = new HashSet<>();
-
 
 
             if (myfilter.getBodyType() != null && myfilter.getBodyType() != "") {
@@ -150,8 +133,6 @@ public class IndexController {
             }
 
 
-
-
             if (myfilter.getMinPower() != null && myfilter.getMaxPower() != null) {
                 charactByPower.addAll(charactRepo.findAllByPowerBetween(myfilter.getMinPower(), myfilter.getMaxPower()));
                 if (!charactByPower.contains(charactRepo.findCharactByCharactId(advert.getCharactId())))
@@ -171,7 +152,6 @@ public class IndexController {
             }
 
         }
-
 
 
         for (Advert rem : removeList)
@@ -211,10 +191,16 @@ public class IndexController {
             model.addAttribute("admin", false);
 
 
+        List<Advert> lastAdv = new ArrayList<>();
+        lastAdv.addAll(adverts);
+
+        Collections.sort(lastAdv);
+        Collections.reverse(lastAdv);
+
         model.addAttribute("pictures", pictures);
         model.addAttribute("pictRepo", pictureRepo);
 
-        model.addAttribute("adverts", adverts);
+        model.addAttribute("adverts", lastAdv);
         model.addAttribute("brands", brandRepo);
 
         model.addAttribute("model", modelRepo.findAllByBrandId(myfilter.getBrandId()));
@@ -246,7 +232,6 @@ public class IndexController {
         sessionStatus.setComplete();
         request.removeAttribute("filter", WebRequest.SCOPE_SESSION);
         return "redirect:";
-
     }
 
 

@@ -22,6 +22,7 @@
         <a th:href="@{/index}"> Главная</a>
         <a th:href="@{/newadv}"> Подать объявление</a>
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
+        <a th:if="${#httpServletRequest.remoteUser} == null" th:href="@{/register}"> Регистрация</a>
 
 
         <div class="header-greeting">
@@ -39,6 +40,9 @@
             <form th:name="login" th:if="${#httpServletRequest.remoteUser} == null" th:action="@{/login}" method="post">
                 <input type="submit" value="Sign In"/>
             </form>
+
+
+
         </div>
     </div>
     <hr>

@@ -13,7 +13,8 @@
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/index}"> Главная</a>
 
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/newadv}"> Подать объявление</a>
-
+        <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
+        <a th:if="${#httpServletRequest.remoteUser} == null" th:href="@{/register}"> Регистрация</a>
 
         <div class="header-right">
 
@@ -29,15 +30,54 @@
 
 
 <body>
-<form name="upload" th:action="@{/upload}" method="post" enctype="multipart/form-data">
+<form style="margin-left: 43%; margin-top: 10%" name="upload" th:action="@{/upload}" method="post" enctype="multipart/form-data">
 
-    <input type="file" th:object="${file1}" name="file1" ><br>
-    <input type="file" th:object="${file2}" name="file2" ><br>
-    <input type="file" th:object="${file3}" name="file3" ><br>
-    <input type="file" th:object="${file4}" name="file4" ><br>
-    <input type="file" th:object="${file5}" name="file5" ><br>
 
-    <input type="submit">
+    <div class="file-upload">
+        <label>
+            <input type="file"  th:object="${file1}" name="file1">
+            <span>Выберите файл</span>
+        </label>
+    </div>
+
+    <br><br>
+
+    <div class="file-upload">
+        <label>
+            <input type="file"  th:object="${file2}" name="file2">
+            <span>Выберите файл</span>
+        </label>
+    </div>
+
+    <br><br>
+
+    <div class="file-upload">
+        <label>
+            <input type="file"  th:object="${file3}" name="file3">
+            <span>Выберите файл</span>
+        </label>
+    </div>
+
+    <br><br>
+
+    <div class="file-upload">
+        <label>
+            <input type="file"  th:object="${file4}" name="file4">
+            <span>Выберите файл</span>
+        </label>
+    </div>
+
+    <br><br>
+    <div class="file-upload">
+        <label>
+            <input type="file"  th:object="${file5}" name="file5">
+            <span>Выберите файл</span>
+        </label>
+    </div>
+
+    <input style="margin-left: 0px" type="submit" value="Apply"/>
+    <a style="margin-left: 155px" th:href="@{/resetadv}" class="knopka">Reset</a>
+
 </form>
 </body>
 </html>

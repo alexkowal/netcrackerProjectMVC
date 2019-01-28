@@ -19,7 +19,7 @@
         <a th:href="@{/index}"> Главная</a>
         <a th:href="@{/newadv}"> Подать объявление</a>
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
-
+        <a th:if="${#httpServletRequest.remoteUser} == null" th:href="@{/register}"> Регистрация</a>
 
         <div class="header-greeting">
             <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
@@ -47,16 +47,20 @@
 <br>
 <br>
 
-
+<br>
 <div class="advert-head"><b>
+
     <span><a th:text="${brand.getName()}"/> | </span>
     <span><a th:text="${model.getName()}"/></span>
 </b>
     <br>
 
-    <span> Опубликовано <a th:text="${advert.getAddDate()}"/></span>
-    <span>id: <a th:text="${advert.getAdvId()}"/></span>
+    <span> Опубликовано <a th:text="${advert.getAddDate()}"/> | </span>
+    <span>id Объявления: <a th:text="${advert.getAdvId()}"/></span>
+
     <br>
+    <span>id Владельца: <a th:text="${advert.getOwnerId()}"/></span>
+<br>
     <span><a th:text="${user.getUserName()}"/>, </span>
     <span><a th:text="${user.getEmail()}"/></span>
     <br>
@@ -69,41 +73,38 @@
 <br>
 
 <table>
-      <span th:each="pict: ${pictures}"
+
+    <div class="info">
+        <span style="color:gray"> Год выпуска</span>
+        <span style="margin-right: 10%"> <a th:text="${advert.getFactYear()}"/></span>
+        <br>
+        <span style="color:gray"> Тип кузова</span>
+        <span style="margin-right: 10%"><a th:text="${charact.getBody()}"/></span>
+        <br>
+        <span style="color:gray"> Коробка</span>
+        <span style="margin-right: 10%"><a th:text="${charact.getTransmission()}"/></span>
+        <br>
+        <span style="color:gray"> Привод</span>
+        <span style="margin-right: 10%"> <a th:text="${charact.getDriveUnit()}"/></span>
+        <br>
+        <span style="color:gray"> Мощность</span>
+        <span style="margin-right: 10%"> <a th:text="${charact.getPower()}"/> л.с.</span>
+        <br>
+        <span style="color:gray"> Пробег</span>
+        <span style="margin-right: 10%"> <a th:text="${advert.getMileage()}"/> км </span>
+        <br>
+
+        <span style="color:gray"> Описание:</span>
+        <br>
+        <span><a th:text="${advert.getDescription()}"/></span>
+        <br>
+    <span th:each="pict: ${pictures}"
             th:if="${pict.getAdvertId()}!=null and ${pict.getAdvertId()} == ${advert.getAdvId()}">
-                           <div class="picture_container"> <img style="float: right"
-                                                                th:src="@{'/img/' + ${pict.getPath()}}" th:width="250"
-                                                                th:height="200"/>    </div>
+                           <div class="picture_container"> <img style="margin-left: 50%" th:src="@{'/img/' + ${pict.getPath()}}" th:width="300"
+                                                                th:height="270"/> <br><br><br><br>   </div>
             </span>
 
 </table>
-
-<div class="info">
-    <span style="color:gray"> Год выпуска</span>
-    <span style="margin-right: 10%"> <a th:text="${advert.getFactYear()}"/></span>
-    <br>
-    <span style="color:gray"> Тип кузова</span>
-    <span style="margin-right: 10%"><a th:text="${charact.getBody()}"/></span>
-    <br>
-    <span style="color:gray"> Коробка</span>
-    <span style="margin-right: 10%"><a th:text="${charact.getTransmission()}"/></span>
-    <br>
-    <span style="color:gray"> Привод</span>
-    <span style="margin-right: 10%"> <a th:text="${charact.getDriveUnit()}"/></span>
-    <br>
-    <span style="color:gray"> Мощность</span>
-    <span style="margin-right: 10%"> <a th:text="${charact.getPower()}"/> л.с.</span>
-    <br>
-    <span style="color:gray"> Пробег</span>
-    <span style="margin-right: 10%"> <a th:text="${advert.getMileage()}"/> км </span>
-    <br>
-
-    <span style="color:gray"> Описание:</span>
-    <br>
-    <span><a th:text="${advert.getDescription()}"/></span>
-    <br>
-
-</div>
 
 </body>
 </html>

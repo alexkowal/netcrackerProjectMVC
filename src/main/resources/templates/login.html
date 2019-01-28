@@ -14,7 +14,7 @@
         <a th:href="@{/index}"> Главная</a>
         <a th:href="@{/newadv}"> Подать объявление</a>
         <a th:if="${#httpServletRequest.remoteUser} != null" th:href="@{/lk}"> Личный кабинет</a>
-
+        <a th:if="${#httpServletRequest.remoteUser} == null" th:href="@{/register}"> Регистрация</a>
 
         <div class="header-greeting">
             <p th:if="${#httpServletRequest.remoteUser} != null" th:inline="text">Hello
@@ -38,12 +38,14 @@
 
 <body>
 
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <!--<div><label> Confirm Password: <input type="password" name="password"/> </label></div>
- -->
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+    <form class="middle" th:action="@{/login}" method="post">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div><label style="padding-left: 15px"> Password: <input type="password" name="password"/> </label></div>
+        <!--<div><label> Confirm Password: <input type="password" name="password"/> </label></div>
+     -->
+        <div><input type="submit" value="Sign In"/></div>
+
+    </form>
+
 </body>
 </html>

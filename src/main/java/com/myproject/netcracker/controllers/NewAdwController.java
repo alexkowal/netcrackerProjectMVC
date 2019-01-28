@@ -8,11 +8,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,42 +56,71 @@ public class NewAdwController {
 
 
     @GetMapping("/newadv")
-    public String startAdwController(@ModelAttribute("advert") Advert advert, Model model) {
+    public String startAdwController(Model model) {
 
         Integer id = 0;
         List<Brand> list = brandRepo.findAllByBrandIdIsNotNull();
-        //model.addAttribute("advert", new Advert());
+        Advert advert = new Advert();
         model.addAttribute("brands", list);
         model.addAttribute("id", id);
         LocalDate date = LocalDate.now();
         advert.setAddDate(date);
+        model.addAttribute("advert", advert);
         return "newadv";
     }
 
-    @ModelAttribute
+    @ModelAttribute("advert")
     public Advert createAdvert() {
         return new Advert();
     }
 
 
     @PostMapping("/newadv")
-    public String getBrand(@ModelAttribute("advert") Advert advert, Model model) {
+    public String getBrand(@Valid @ModelAttribute("advert") Advert advert, BindingResult bindingResultAdv, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepo.findByLogin(currentPrincipalName);
         advert.setOwnerId(user.getIdUser());
 
+
         System.out.println("/newadv/" + advert.getBrandId());
+        model.addAttribute("br", bindingResultAdv);
+
+        if (advert.getBrandId() == null)
+            bindingResultAdv.addError(new FieldError(bindingResultAdv.getObjectName(), "brandId",
+                    "Выберите марку"));
+
+        if (advert.getDescription().isEmpty())
+            bindingResultAdv.addError(new FieldError("advert", "description",
+                    "Введите описание"));
+        if (advert.getTitle().isEmpty())
+            bindingResultAdv.addError(new FieldError("advert", "title",
+                    "Введите название"));
+
+
+        if (bindingResultAdv.hasErrors()) {
+            if ((advert.getBrandId() == null) || (advert.getTitle().isEmpty()) || (advert.getDescription().isEmpty())) {
+                advert.setBrandId(null);
+                advert.setTitle(null);
+                advert.setDescription(null);
+                return "redirect:/newadv";
+            }
+
+        }
+
         return "redirect:newadv/" + advert.getBrandId();
     }
 
 
     @GetMapping("/newadv/{brandParam}")
-    public String paramAdwController(@ModelAttribute(name = "advert") Advert advert,
+    public String paramAdwController(@ModelAttribute(name = "Advert") Advert advert,
                                      Model model, @PathVariable String brandParam, SessionStatus status) {
 
         List<com.myproject.netcracker.domain.Model> list = modelRepo.findAllByBrandId(Long.valueOf(brandParam));
+
+        model.addAttribute("brandRepo", brandRepo);
+
         model.addAttribute("models", list);
         System.out.println("id = " + brandParam);
         return "newadv";
@@ -95,9 +129,23 @@ public class NewAdwController {
 
 
     @PostMapping("/newadv/{brandParam}")
-    public String getChar(@ModelAttribute("advert") Advert advert, Model model) {
+    public String getChar(@ModelAttribute("advert") @Valid Advert advert, BindingResult bindingResultAdv,
+                          Model model) {
         String returnVal = "redirect:newadv/" + advert.getBrandId() + "/" + advert.getModelId();
         System.out.println(returnVal);
+
+        if (advert.getModelId() == null)
+            bindingResultAdv.addError(new FieldError("advert", "modelId",
+                    "Выберите модель"));
+
+
+        if (bindingResultAdv.hasErrors()) {
+            if ((advert.getModelId() == null)) {
+                advert.setModelId(null);
+                return "redirect:" + advert.getBrandId();
+            }
+        }
+
         return "redirect:" + advert.getBrandId() + "/" + advert.getModelId();
 
     }
@@ -109,6 +157,8 @@ public class NewAdwController {
 
         List<Charact> list = charactRepo.findAllByBrandIdAndAndModelId(Long.valueOf(brandParam), Long.valueOf(modelParam));
 
+        model.addAttribute("brandRepo", brandRepo);
+        model.addAttribute("modelRepo", modelRepo);
         model.addAttribute("charact", list);
         return "newadv";
 
@@ -116,12 +166,35 @@ public class NewAdwController {
 
 
     @PostMapping("/newadv/{brandParam}/{modelParam}")
-    public String saveAdv(@ModelAttribute(name = "advert") Advert advert,
+    public String saveAdv(@ModelAttribute(name = "advert") @Valid Advert advert, BindingResult bindingResultAdv,
                           Model model, @PathVariable String brandParam,
                           @PathVariable String modelParam, SessionStatus status) {
 
         advert.setIsactive(true);
         //return "redirect:/lk";
+
+        if (advert.getCharactId() == null)
+            bindingResultAdv.addError(new FieldError("advert", "charactId",
+                    "Выберите комплектацию"));
+
+
+        if (advert.getCharactId() == null || advert.getCostVal() == null || advert.getMileage() == null || advert.getFactYear() == null)
+            bindingResultAdv.addError(new FieldError("advert", "modelId",
+                    "Выберите модель"));
+
+
+        if (bindingResultAdv.hasErrors()) {
+            if (advert.getCharactId() == null || advert.getCostVal() == null || advert.getMileage() == null || advert.getFactYear() == null) {
+                advert.setCharactId(null);
+                advert.setCostVal(null);
+                advert.setMileage(null);
+                advert.setFactYear(null);
+                return "redirect:/newadv/" + advert.getBrandId() + "/" + advert.getModelId();
+            }
+            return "redirect:/newadv/" + advert.getBrandId() + "/" + advert.getModelId();
+        }
+
+
         advertRepo.save(advert);
         return "redirect:/upload";
     }
@@ -153,7 +226,7 @@ public class NewAdwController {
                              SessionStatus status) throws IOException {
 
 
-        if (file1.getOriginalFilename().length()>2) {
+        if (file1.getOriginalFilename().length() > 2) {
             Picture pict1 = new Picture();
             pict1.setAdvertId(advert.getAdvId());
 
@@ -174,7 +247,7 @@ public class NewAdwController {
 ///////////FILE2
 ///////////FILE2
 
-        if (file2.getOriginalFilename().length()>2) {
+        if (file2.getOriginalFilename().length() > 2) {
             Picture pict2 = new Picture();
             pict2.setAdvertId(advert.getAdvId());
 
@@ -192,7 +265,7 @@ public class NewAdwController {
             pictureRepo.save(pict2);
         }
 
-        if (file3.getOriginalFilename().length()>2) {
+        if (file3.getOriginalFilename().length() > 2) {
             Picture pict3 = new Picture();
             pict3.setAdvertId(advert.getAdvId());
 
@@ -210,7 +283,7 @@ public class NewAdwController {
             pictureRepo.save(pict3);
         }
 
-        if (file4.getOriginalFilename().length()>2) {
+        if (file4.getOriginalFilename().length() > 2) {
 
             Picture pict4 = new Picture();
 
@@ -232,7 +305,7 @@ public class NewAdwController {
             pictureRepo.save(pict4);
         }
 
-        if (file5.getOriginalFilename().length()>2) {
+        if (file5.getOriginalFilename().length() > 2) {
             Picture pict5 = new Picture();
             pict5.setAdvertId(advert.getAdvId());
 
@@ -255,7 +328,16 @@ public class NewAdwController {
         advertRepo.save(advert);
 
         return "redirect:index";
+    }
 
+    @GetMapping({"/resetadv"})
+    public String dropadv(@ModelAttribute("advert") Advert advert, WebRequest request,
+                          SessionStatus sessionStatus) {
+
+        advert.remove();
+        sessionStatus.setComplete();
+        request.removeAttribute("advert", WebRequest.SCOPE_SESSION);
+        return "redirect:";
 
     }
 
